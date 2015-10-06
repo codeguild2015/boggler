@@ -25,15 +25,21 @@ def main():
         order, without duplicates, one word per line)
     """
     dict_file, board_text = getargs()
-    game_dict.read( dict_file )
+    game_dict.read(dict_file)
     board = BoggleBoard(board_text)
-    results = [ ] 
-    # FIXME: 
-    #    Search for words starting from each position on the board. 
-    #    Remove duplicates from results, and sort the alphabetically.
-    #        (Write a separate function for dedu
-    #    Print each word and its score
-    #    Print total score
+    results = []
+    [find_words(board, x, y, board.get_char(x, y), results) for x in 
+     range(4) for y in range(4)]
+    set_results = set(results)
+    results = list(set_results).sort()
+    final = [(item, score(item)) for item in results]
+    if final:
+        for elem in final:
+            print(elem[0], elem[1])
+        sum_list = [elem[1] for elem in final]
+        print('Total is: ', sum(sum_list))
+    else:
+        print('None')
 
 
 def getargs():
@@ -75,24 +81,39 @@ def find_words(board, row, col, prefix, results):
     Effects:
         inserts found words (not necessarily unique) into results
     """
-	# FIXME: one base case is that position row,col is not
-	#    available (could be off the board, could be currently
-	#    in use).  board.py can check that
-	# FIXME:  For the remaining cases, where the tile at row,col 
-	#    is available, we need to consider the new prefix that 
-	#    includes the letter on this tile
-	# FIXME:  Another base case is that no word can start with 
-	#    the current prefix.  No use searching further on that path.
-	# FIXME:  If the current position is a complete word, it is NOT 
-	#    a base case, because it might also be part of a longer word. 
-	#    We save the word we found into the global results list, and
-	#    continue with the recursive case. 
-	# FIXME: The recursive case is when the current prefix (including
-	#    the tile at row,col) is a possible prefix of a word.  We 
-	#    must mark it as currently in use, then search in all 8 directions
-	#    around it, and finally mark it as no longer in use. See board.py
-	#    for how to mark and unmark tiles, and how to get the text
-	#    on the current tile.     
+
+# FIXME: one base case is that position row,col is not
+#    available (could be off the board, could be currently
+#    in use).  board.py can check that
+# FIXME:  For the remaining cases, where the tile at row,col 
+#    is available, we need to consider the new prefix that 
+#    includes the letter on this tile
+# FIXME:  Another base case is that no word can start with 
+#    the current prefix.  No use searching further on that path.
+# FIXME:  If the current position is a complete word, it is NOT 
+#    a base case, because it might also be part of a longer word. 
+#    We save the word we found into the global results list, and
+#    continue with the recursive case. 
+# FIXME: The recursive case is when the current prefix (including
+#    the tile at row,col) is a possible prefix of a word.  We 
+#    must mark it as currently in use, then search in all 8 directions
+#    around it, and finally mark it as no longer in use. See board.py
+#    for how to mark and unmark tiles, and how to get the text
+#    on the current tile.
+
+    board.mark_taken(row, col)
+    for x in range(row-1, row+2):
+        for y in range(col-1, col+2):
+            if board.available(x, y):
+                prefix += board.get_char(x, y)
+                if game_dict.search(prefix) == 'WORD':
+                    results.append(prefix)
+                if game_dict.search(prefix) == 'PREFIX':
+                    board.mark_taken(x, y)
+                    find_words(board, x, y, prefix, results) 
+                else:
+                    board.unmark_taken(x, y)
+                    continue
     return
     
     
