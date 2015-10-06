@@ -76,15 +76,15 @@ Press enter to end
 
   <h2>Starting materials</h2>
   <ul>
-    <li><a href="base/boggle/graphics.py">graphics.py</a> (don't change this)</li>
-    <li><a href="base/boggle/boggle_board.py">boggle_board.py</a> (don't change this)</li>
-    <li><a href="base/boggle/test_harness.py">test_harness.py</a> (for testing)</li>    
-    <li><a href="base/boggle/grid.py">grid.py</a> (for display, don't change this)</li>  
-    <li><a href="base/boggle/game_dict.py">game_dict.py</a> You must complete this and turn it in</li>  
-    <li><a href="base/boggle/boggler.py">boggler.py</a> You must complete this and turn it in</li>    
-    <li><a href="base/boggle/shortdict.txt">shortdict.txt</a> A short list of words, 
+    <li><a href="/boggle/graphics.py">graphics.py</a> (don't change this)</li>
+    <li><a href="/boggle/boggle_board.py">boggle_board.py</a> (don't change this)</li>
+    <li><a href="/boggle/test_harness.py">test_harness.py</a> (for testing)</li>    
+    <li><a href="/boggle/grid.py">grid.py</a> (for display, don't change this)</li>  
+    <li><a href="/boggle/game_dict.py">game_dict.py</a> You must complete this and turn it in</li>  
+    <li><a href="/boggle/boggler.py">boggler.py</a> You must complete this and turn it in</li>    
+    <li><a href="/boggle/shortdict.txt">shortdict.txt</a> A short list of words, 
         useful for testing</li>
-    <li><a href="base/boggle/dict.txt">dict.txt</a> A more typical list of 
+    <li><a href="/boggle/dict.txt">dict.txt</a> A more typical list of 
     approximately 40,000 common English words.  This is usually enough to beat 
     human boggle players. Serious players of Scrabble and crossword puzzles 
     use larger lists that include less common words.</li>
