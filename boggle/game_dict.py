@@ -29,8 +29,15 @@ def read( file, min_length=3 ):
             more letters count.
     Returns:  nothing
     """
+    #f = open(filename, 'r')
+    print('the value of file in read is: ', file)
     global words
-    words = [ ]
+    for line in file:
+        print("line in file is: ", line)
+        words.append(file)
+    print("the value of words at the end of read is: ", words)
+
+
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
     words = sorted(words)  # Being sorted is most important for binary search
