@@ -99,7 +99,7 @@ Press enter to end
     </p>
 <code><pre>
 $ python3 game_dict.py shortdict.txt 
-***FAILED***  First word in dictionar (alpha)  Expected: | 1 | but got | 0 |
+***FAILED***  First word in dictionary (alpha)  Expected: | 1 | but got | 0 |
 ***FAILED***  Last word in dictionary (omega)  Expected: | 1 | but got | 0 |
 ***FAILED***  Within dictionary (beta)  Expected: | 1 | but got | 0 |
 ***FAILED***  Within dictionary (delta)  Expected: | 1 | but got | 0 |

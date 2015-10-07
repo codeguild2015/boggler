@@ -59,7 +59,7 @@ class BoggleBoard(object):
                if char == "q" :
                    char = "qu"
                self.content[row].append(char)
-               self.in_use[row].append( False )
+               self.in_use[row].append(False)
                grid.fill_cell(row,col,grid.white)  # Hack alert! 
                grid.label_cell(row,col,char)       # Hack alert!  
 

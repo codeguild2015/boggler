@@ -31,11 +31,17 @@ def read( file, min_length=3 ):
     """
     global words
     words = [ ]
+    for line in file:
+        if len(line) >=3 and "'" not in line and "-" not in line:
+            words.append(line.strip())
+		
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
+		    
     words = sorted(words)  # Being sorted is most important for binary search
-            
-def search( prefix ):
+    print(sorted(words))
+    
+#def search(prefix):
     """Search for a prefix string in the dictionary.
     Args:
         str:  A string to look for in the dictionary
@@ -43,9 +49,10 @@ def search( prefix ):
         code WORD if str exactly matches a word in the dictionary,
             PREFIX if str does not match a word exactly but is a prefix
                 of a word in the dictionary, or
-        NO_MATCH if str is not a prefix of any word in the dictionary
-    """
+        NO_MATCH if str is not a prefix of any word in the dictionary"""
+    
     return NO_MATCH
+
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
     # words[i].startswith(prefix). 
@@ -72,12 +79,13 @@ def search( prefix ):
 
 
 if __name__ == "__main__":
+
     # This code executes only if we execute game_dict.py by itself,
     # not if we import it into boggler.py
-    from test_harness import testEQ
-    read(open("shortdict.txt"))
+    #from test_harness import testEQ
+    read(open("dict.txt"))
     # shortdict contains "alpha", "beta","delta", "gamma", "omega"
-    testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
+    """testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Within dictionary (beta)", search("beta"), WORD)
     testEQ("Within dictionary (delta)", search("delta"), WORD)
@@ -96,12 +104,10 @@ if __name__ == "__main__":
     # Try again with only words of length at least 5
     # Now beta should be absent
     read(open("shortdict.txt"), min_length=5)
-    print("New dictionary: ", dict)
+    #print("New dictionary: ", dict)
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Short word omitted (beta)", search("beta"), NO_MATCH)
     read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
-    testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
-    
-    
+    testEQ("Can I find bead in long dictionary?", search("bead"), WORD)"""

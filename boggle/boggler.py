@@ -1,6 +1,6 @@
 """
 Boggle solver finds words on a boggle board. 
-Authors:  #FIXME
+Authors:  Skip and Nick
 Credits: #FIXME 
 
 Usage:  python3 boggler.py  "board" dict.txt
