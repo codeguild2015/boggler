@@ -27,20 +27,20 @@ def read( file, min_length=3 ):
             in Boggle the limit is usually 3, but in
             some variations of Boggle only words of 4 or
             more letters count.
-    Returns:  nothing
+    Returns:  nothing   
     """
-    #f = open(filename, 'r')
-    print('the value of file in read is: ', file)
-    global words
-    for line in file:
-        print("line in file is: ", line)
-        words.append(file)
-    print("the value of words at the end of read is: ", words)
-
-
+    global words 
+    words = [ ] # KS: NEED TO SUPPRESS FOR UNIT TESTS??
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
-    words = sorted(words)  # Being sorted is most important for binary search
+    for line in file:
+        if "-" not in line and "\'" not in line:
+            word_ = line.split()
+            for item in word_:
+                if len(item) >= min_length:
+                    words.append(item) # KS: a list of strings
+    words = sorted(words)  # Being sorted is most important for binary search  
+    print("words in read() are: ", words)
             
 def search( prefix ):
     """Search for a prefix string in the dictionary.
