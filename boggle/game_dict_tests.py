@@ -1,4 +1,6 @@
 from game_dict import *
+import game_dict 
+
 from nose import with_setup
 
 
@@ -19,20 +21,26 @@ def my_teardown_function():
 
 # @with_setup(my_setup_function, my_teardown_function)
 def test_read():
-    #global words
-    read(['hi'])
-    #print("value of words in test file is: ", words)
-    assert words == [[]]
+
+    global words
+    file = ['hi']
+    read(file, 3)
+    print("words after assert 'hi': ", game_dict.words)
+    assert words == []
     print("assertion passed!!!")
 
-    read(['his'])
+    file = ['his']
+    read(file, 3)
+    print("words after assert 'his': ", game_dict.words)
     #print("value of words in test file is: ", words)
-    assert words == [['his']]
+    assert game_dict.words == ['his']
     print("assertion passed!!!")
 
-    read(['his-'])
+    file = ['his-']
+    read(file, 3)
+    print("words after assert 'his-': ", game_dict.words)
     #print("value of words in test file is: ", words)
-    assert words == [[]]
+    assert game_dict.words == []
     print("assertion passed!!!")
 
 
