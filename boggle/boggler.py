@@ -5,13 +5,14 @@ Credits: #FIXME
 
 Usage:  python3 boggler.py  "board" dict.txt
     where "board" is 16 characters of board, in left-to-right reading order
-    and dict.txt can be any file containing a list of words in alphabetical order
-    
+    and dict.txt can be any file containing a list of words in alphabetical
+    order
 """
 
 from boggle_board import BoggleBoard   
 import argparse   # Command line processing
 import game_dict  # Dictionary of legal game words
+
 
 def main():
     """
@@ -28,7 +29,7 @@ def main():
     game_dict.read(dict_file)
     board = BoggleBoard(board_text)
     results = []
-    [find_words(board, x, y, board.get_char(x, y), results) for x in 
+    [find_words(board, x, y, board.get_char(x, y), results) for x in
      range(4) for y in range(4)]
     set_results = set(results)
     results = list(set_results).sort()
@@ -106,9 +107,11 @@ def find_words(board, row, col, prefix, results):
         for y in range(col-1, col+2):
             if board.available(x, y):
                 prefix += board.get_char(x, y)
-                if game_dict.search(prefix) == 'WORD':
+                if game_dict.search(prefix) == 1:
                     results.append(prefix)
-                if game_dict.search(prefix) == 'PREFIX':
+                    board.mark_taken(x, y)
+                    find_words(board, x, y, prefix, results)
+                elif game_dict.search(prefix) == 2:
                     board.mark_taken(x, y)
                     find_words(board, x, y, prefix, results) 
                 else:
@@ -123,9 +126,18 @@ def score(word):
     Compute the Boggle score for a word, based on the scoring table
     at http://en.wikipedia.org/wiki/Boggle. 
     #FIXME: finish writing this docstring
-     """
-	#FIXME  score the word correctly
-    return 0
+    """
+    length = len(word)
+    if length <= 4:
+        return 1
+    elif length == 5:
+        return 2
+    elif length == 6:
+        return 3
+    elif length == 7:
+        return 5
+    else:
+        return 11
 
 
 
@@ -134,6 +146,11 @@ def score(word):
 ####
 
 if __name__ == "__main__":
+    
+    assert score('act') == 1
+    assert score('ecclesiastical') == 11
+    assert score('please') == 3
+    print('happy dance')
     main()
     input("Press enter to end")
 
