@@ -30,7 +30,7 @@ def read( file, min_length = 3 ):
     Returns:  nothing   
     """
     global words 
-    #words = [ ] # KS: NEED TO SUPPRESS FOR UNIT TESTS??
+    words = [ ] 
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
     for line in file:
@@ -40,7 +40,7 @@ def read( file, min_length = 3 ):
                 if len(item) >= min_length:
                     words.append(item) # KS: a list of strings
     words = sorted(words)  # Being sorted is most important for binary search  
-    #print(words)
+
 
 def search( prefix ):
     """Search for a prefix string in the dictionary.
@@ -52,7 +52,19 @@ def search( prefix ):
                 of a word in the dictionary, or
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
-    return NO_MATCH
+    global words
+    matches = []
+    for item in words:
+        if item.startswith(prefix) == True: 
+            matches.append(item)
+    if len(matches) == 0:
+        return NO_MATCH
+    if prefix in matches:
+        return WORD
+    if len(matches) >= 1:
+        return PREFIX
+
+  
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
     # words[i].startswith(prefix). 
