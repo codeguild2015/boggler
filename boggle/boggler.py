@@ -75,6 +75,14 @@ def find_words(board, row, col, prefix, results):
     Effects:
         inserts found words (not necessarily unique) into results
     """
+
+    board.mark_taken(row, col)
+        for x in range(row-1, row+2):
+            for y in range(col-1, col+2):
+                if board.available(x, y):
+                    
+
+
 	# FIXME: one base case is that position row,col is not
 	#    available (could be off the board, could be currently
 	#    in use).  board.py can check that
