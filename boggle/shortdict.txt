@@ -3,3 +3,7 @@ beta
 delta
 gamma
 omega
+can’t
+have-not
+on/off
+he

@@ -1,8 +1,8 @@
 """
 game_dict: Game dictionary.
 
-Authors:  #FIXME
-Consulted in design: #FIXME
+Authors:  Connor & Cole
+Consulted in design: stackoverflow.com
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
@@ -17,7 +17,7 @@ WORD = 1
 PREFIX = 2
 NO_MATCH = 0
 
-def read( file, min_length=3 ):
+def read( filename, min_length=3 ):
     """Read the dictionary from a sorted list of words.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
@@ -31,9 +31,13 @@ def read( file, min_length=3 ):
     """
     global words
     words = [ ]
-    #FIXME: read the dictionary file into words.  Skip words that
-    #   are too short or contain non-alphabetic characters
-    words = sorted(words)  # Being sorted is most important for binary search
+    punctuation = ["’", '-', '/']
+    f = open(filename, 'r')
+    wordlist = f.readlines()
+    for word in wordlist:
+            if len(word.strip()) >= min_length and not any(punc in word for punc in punctuation):
+                words.append(word.strip())
+    words = sorted(words) 
             
 def search( prefix ):
     """Search for a prefix string in the dictionary.
@@ -45,7 +49,17 @@ def search( prefix ):
                 of a word in the dictionary, or
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
-    return NO_MATCH
+    for word in words:
+        if any(prefix == word for word in words):
+            return WORD
+        elif any(word.startswith(prefix) for word in words):
+            return PREFIX
+        else:
+            return NO_MATCH
+
+
+
+    #return NO_MATCH
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
     # words[i].startswith(prefix). 
@@ -75,7 +89,7 @@ if __name__ == "__main__":
     # This code executes only if we execute game_dict.py by itself,
     # not if we import it into boggler.py
     from test_harness import testEQ
-    read(open("shortdict.txt"))
+    read("shortdict.txt")
     # shortdict contains "alpha", "beta","delta", "gamma", "omega"
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
@@ -95,12 +109,12 @@ if __name__ == "__main__":
         search("hagiography"), NO_MATCH)
     # Try again with only words of length at least 5
     # Now beta should be absent
-    read(open("shortdict.txt"), min_length=5)
+    read("shortdict.txt", min_length=5)
     print("New dictionary: ", dict)
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Short word omitted (beta)", search("beta"), NO_MATCH)
-    read(open("dict.txt"))  # Long dictioanry
+    read("dict.txt")  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
     
