@@ -31,13 +31,14 @@ def read( filename, min_length=3 ):
     """
     global words
     words = [ ]
-    punctuation = ["’", '-', '/']
-    f = open(filename, 'r')
+    punctuation = ["'", '-', '/']
+    f = filename
     wordlist = f.readlines()
     for word in wordlist:
             if len(word.strip()) >= min_length and not any(punc in word for punc in punctuation):
                 words.append(word.strip())
     words = sorted(words) 
+    f.close()
             
 def search( prefix ):
     """Search for a prefix string in the dictionary.
@@ -57,15 +58,6 @@ def search( prefix ):
         else:
             return NO_MATCH
 
-
-
-    #return NO_MATCH
-    # FIXME: I suggest using a linear search first, checking for exact matches
-    # with == and then for partial matches with the "startswith" function, e.g.,
-    # words[i].startswith(prefix). 
-    # Once you get the whole program working, you can make it much, much faster
-    # using a binary search (which we will discuss in class). 
-    
     
 ######################################################
 #  Test driver
@@ -89,7 +81,7 @@ if __name__ == "__main__":
     # This code executes only if we execute game_dict.py by itself,
     # not if we import it into boggler.py
     from test_harness import testEQ
-    read("shortdict.txt")
+    read(open("shortdict.txt"))
     # shortdict contains "alpha", "beta","delta", "gamma", "omega"
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
@@ -109,13 +101,14 @@ if __name__ == "__main__":
         search("hagiography"), NO_MATCH)
     # Try again with only words of length at least 5
     # Now beta should be absent
-    read("shortdict.txt", min_length=5)
+    read(open("shortdict.txt"), min_length=5)
     print("New dictionary: ", dict)
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Short word omitted (beta)", search("beta"), NO_MATCH)
-    read("dict.txt")  # Long dictioanry
+    read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
+
     
     
