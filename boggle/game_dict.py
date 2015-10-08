@@ -53,29 +53,15 @@ def search( prefix ):
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
     global words
-    
-    for i in range(len(words)):
-        if words[i] == prefix:
-            #print("words[i] at i if is {}, searching for {}  ".format(words[i], prefix))
-            # return "WORD"
-            return 1
-        elif words[i].startswith(prefix):
-            # print("words[i] at i elif is {}, searching for {}  ".format(words[i], prefix))
-            # return "PREFIX"
-            return 2
-        else:
-            #print("words[i] at i else is:  ", words[i] )
-            # result =  "NO_MATCH"
-            result = 0
 
-    return result
-    # FIXME: I suggest using a linear search first, checking for exact matches
-    # with == and then for partial matches with the "startswith" function, e.g.,
-    # words[i].startswith(prefix). 
-    # Once you get the whole program working, you can make it much, much faster
-    # using a binary search (which we will discuss in class). 
-    
-    
+    if [1 for word in words if word == prefix]:
+        return 1
+
+    if [2 for word in words if word.startswith(prefix)]:
+        return 2
+
+    return 0
+
 ######################################################
 #  Test driver
 #    for testing game_dict.py by itself,
