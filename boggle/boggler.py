@@ -90,10 +90,10 @@ def find_words(board, row, col, prefix):
         for y in range(col-1, col+2):
             if board.available(x, y):
                 prefix += board.get_char(x, y)
-                if game_dict.search(prefix) == 1:
+                if game_dict.search(prefix) == 1: # The value of WORD
                     board.results.append(prefix)
                     find_words(board, x, y, prefix)
-                elif game_dict.search(prefix) == 2:
+                elif game_dict.search(prefix) == 2: # The value of PREFIX
                     find_words(board, x, y, prefix)
                 if board.get_char(x, y) == 'qu':
                     prefix = prefix[:-2]
