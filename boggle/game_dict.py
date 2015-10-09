@@ -1,7 +1,7 @@
 """
 game_dict: Game dictionary.
 
-Authors:  #FIXME
+Authors:  Jaydn & Mercy
 Consulted in design: #FIXME
 
 Differs from a spelling dictionary in that looking up a string
@@ -45,6 +45,17 @@ def search( prefix ):
                 of a word in the dictionary, or
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
+    for line in file:
+        if len(line.strip()) >= min_length and "-" not in line and "'" not in line:
+           words.append(line.strip())
+        if prefix in words:
+            return WORD
+            else:
+        for word in words:
+            if word.startswith(prefix):
+                return PREFIX
+
+
     return NO_MATCH
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
