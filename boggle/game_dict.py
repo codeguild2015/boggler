@@ -45,20 +45,34 @@ def read(filename, min_length=3):
 def search(prefix):
     """Search for a prefix string in the dictionary.
     Args:
-        str:  A string to look for in the dictionary
+       str:  A string to look for in the dictionary
     Returns:
-        code WORD if str exactly matches a word in the dictionary,
-            PREFIX if str does not match a word exactly but is a prefix
-                of a word in the dictionary, or
-        NO_MATCH if str is not a prefix of any word in the dictionary
+       code WORD if str exactly matches a word in the dictionary,
+           PREFIX if str does not match a word exactly but is a prefix
+               of a word in the dictionary, or
+       NO_MATCH if str is not a prefix of any word in the dictionary
     """
-    for word in words:
-        if any(prefix == word for word in words):
-            return WORD
-        elif any(word.startswith(prefix) for word in words):
-            return PREFIX
-        else:
-            return NO_MATCH
+    x = len(words)
+
+    def dict_search(prefix, low=0, hi=x):
+
+        mid = int((low+hi)/2)
+        answer = 3
+        if prefix == words[mid] or low == mid:
+            if prefix == words[low] or prefix == words[hi] or prefix == words[mid]:
+                return WORD
+            elif words[hi].startswith(prefix) or words[low].startswith(prefix):
+                return PREFIX
+            else:
+                return NO_MATCH
+        elif words[mid] < prefix:
+            answer = dict_search(prefix, mid, hi)
+        elif words[mid] > prefix:
+            answer = dict_search(prefix, low, mid)
+        return answer
+
+    return dict_search(prefix, 0, x)
+
 
 
 ######################################################

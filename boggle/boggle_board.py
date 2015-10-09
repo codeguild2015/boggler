@@ -100,30 +100,29 @@ class BoggleBoard(object):
             return False
         return not self.in_use[row][col]
 
-
-def mark_taken(self, row, col):
-    """ Marks the tile at row,col as currently in use
-    Args:
-      self: this board
-      row: row of board, 0..3
-      col: col of board, 0..3
-    Returns:
-      nothing
-    Requires:
-      Tile must not already be in use.  mark_taken and unmark_taken must
-      strictly alternate.  Proper sequence is
-          - check position for availability
-          - get character
-          - mark taken
-             - further exploration from this position
-          - unmark taken
-    """
-    assert row >= 0 and row < len(self.content)
-    assert col >= 0 and col < len(self.content[0])
-    assert not self.in_use[row][col]
-    self.in_use[row][col] = True
-    grid.fill_cell(row, col, grid.green)
-    grid.label_cell(row, col, self.content[row][col])
+    def mark_taken(self, row, col):
+        """ Marks the tile at row,col as currently in use
+        Args:
+          self: this board
+          row: row of board, 0..3
+          col: col of board, 0..3
+        Returns:
+          nothing
+        Requires:
+          Tile must not already be in use.  mark_taken and unmark_taken must
+          strictly alternate.  Proper sequence is
+              - check position for availability
+              - get character
+              - mark taken
+                 - further exploration from this position
+              - unmark taken
+        """
+        assert row >= 0 and row < len(self.content)
+        assert col >= 0 and col < len(self.content[0])
+        assert not self.in_use[row][col]
+        self.in_use[row][col] = True
+        grid.fill_cell(row, col, grid.green)
+        grid.label_cell(row, col, self.content[row][col])
 
     def unmark_taken(self, row, col):
         """

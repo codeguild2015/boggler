@@ -136,5 +136,11 @@ if __name__ == "__main__":
     assert score('act') == 1
     assert score('ecclesiastical') == 11
     assert score('please') == 3
+    # temp_board = BoggleBoard('abcxabcdabcdabcd')
+    # temp_board.mark_taken(2, 2)
+    # assert not temp_board.available(2, 2)
+    # assert temp_board.get_char(0, 3) == 'x'
+    # temp_board.unmark_taken(2, 2)
+    # assert temp_board.available(2, 2)
     main()
     input("Press enter to end")
