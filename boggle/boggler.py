@@ -30,8 +30,9 @@ def main():
     board = BoggleBoard(board_text)
     
     results = [ ] 
-
+    #game_dict = game_dict.read( dict_file ) #KS: added this to initialize
     init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
+    
     # FIXME: 
     #    Search for words starting from each position on the board. 
     #    Remove duplicates from results, and sort them alphabetically.
@@ -86,17 +87,22 @@ def find_words(board, row, col, prefix, results):
         for column in row: 
             col = row[column]
     """
-    cur_word = board.content[row][col]
+    cur_word = board.content[row][col] # !! KS this isn't called again
     if board.available(row, col) is True:
+        dictionary = ["alpha", "gamma"]
 
         prefix = []
+        
         row_offset = [-1, 0, 1]
         column_offset = [-1, 0, 1]
 
         strings_ = ""
-  
+        counter = 1
         for i in row_offset:
+            
+            #print(counter)
             for j in column_offset:
+                counter += 1
                 next_row = row + i
                 next_col = col + j  
                 if (next_row >= 0 and next_col >= 0) and (next_row <= 3 and 
@@ -104,10 +110,17 @@ def find_words(board, row, col, prefix, results):
                     strings_ = strings_ + board.content[next_row][next_col]
                     if strings_ is not "":    
                         prefix.append(strings_)
+                                                
+                    if counter == 9:
+                        find_words(board, next_row, next_col, 
+                            board.content[next_row][next_col], results)
+
         print(prefix)
 
+
         #for words in prefix:
-        #    if words in 
+        #    if words in game_dict:
+
    
     #find_words(board, next_row, next_col, prefix, results )
 
