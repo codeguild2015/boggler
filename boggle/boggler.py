@@ -26,11 +26,15 @@ def main():
     """
     dict_file, board_text = getargs()
     game_dict.read( dict_file )
+    
     board = BoggleBoard(board_text)
+    
     results = [ ] 
+
+    init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
     # FIXME: 
     #    Search for words starting from each position on the board. 
-    #    Remove duplicates from results, and sort the alphabetically.
+    #    Remove duplicates from results, and sort them alphabetically.
     #        (Write a separate function for dedu
     #    Print each word and its score
     #    Print total score
@@ -44,7 +48,7 @@ def getargs():
     Returns:
        pair (dictfile, text)
          where dictfile is a file containing dictionary words (the words boggler will look for)
-         and   text is 16 characters of text that form a board
+         and text is 16 characters of text that form a board
     Effects:
        also prints meaningful error messages when the command line does not have the right arguments
    """
@@ -75,6 +79,38 @@ def find_words(board, row, col, prefix, results):
     Effects:
         inserts found words (not necessarily unique) into results
     """
+
+    """Extracting content
+    for item in BoggleBoard.content:
+        row = BoggleBoard.content[item]
+        for column in row: 
+            col = row[column]
+    """
+    cur_word = board.content[row][col]
+    if board.available(row, col) is True:
+
+        prefix = []
+        row_offset = [-1, 0, 1]
+        column_offset = [-1, 0, 1]
+
+        strings_ = ""
+  
+        for i in row_offset:
+            for j in column_offset:
+                next_row = row + i
+                next_col = col + j  
+                if (next_row >= 0 and next_col >= 0) and (next_row <= 3 and 
+                    next_col <= 3):
+                    strings_ = strings_ + board.content[next_row][next_col]
+                    if strings_ is not "":    
+                        prefix.append(strings_)
+        print(prefix)
+
+        #for words in prefix:
+        #    if words in 
+   
+    #find_words(board, next_row, next_col, prefix, results )
+
 	# FIXME: one base case is that position row,col is not
 	#    available (could be off the board, could be currently
 	#    in use).  board.py can check that
