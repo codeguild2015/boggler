@@ -17,10 +17,10 @@ WORD = 1
 PREFIX = 2
 NO_MATCH = 0
 
-def read( file, min_length=3 ):
+def read( f, min_length=3 ):
     """Read the dictionary from a sorted list of words.
     Args:
-        file: dictionary file (list of words, in alphabetical order), already open
+        f: dictionary f (list of words, in alphabetical order), already open
         min_length: integer, minimum length of words to
             include in dictionary. Useful for games in
             which short words don't count.  For example,
@@ -30,9 +30,11 @@ def read( file, min_length=3 ):
     Returns:  nothing
     """
     global words
-    words = [ ]
-    #FIXME: read the dictionary file into words.  Skip words that
-    #   are too short or contain non-alphabetic characters
+    for word in f:
+        word = word.strip()
+        print(word)
+        if len(word) >= min_length and word.isalpha(): # Skip words that are too short or non-alphabetic.
+            words.append(word)
     words = sorted(words)  # Being sorted is most important for binary search
             
 def search( prefix ):
@@ -45,15 +47,6 @@ def search( prefix ):
                 of a word in the dictionary, or
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
-    for line in file:
-        if len(line.strip()) >= min_length and "-" not in line and "'" not in line:
-           words.append(line.strip())
-        if prefix in words:
-            return WORD
-            else:
-        for word in words:
-            if word.startswith(prefix):
-                return PREFIX
 
 
     return NO_MATCH
@@ -85,8 +78,11 @@ def search( prefix ):
 if __name__ == "__main__":
     # This code executes only if we execute game_dict.py by itself,
     # not if we import it into boggler.py
+
+
     from test_harness import testEQ
-    read(open("shortdict.txt"))
+
+    read(open("dict.txt"))
     # shortdict contains "alpha", "beta","delta", "gamma", "omega"
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
@@ -107,7 +103,7 @@ if __name__ == "__main__":
     # Try again with only words of length at least 5
     # Now beta should be absent
     read(open("shortdict.txt"), min_length=5)
-    print("New dictionary: ", dict)
+    # print("New dictionary: ", dict)
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Short word omitted (beta)", search("beta"), NO_MATCH)
