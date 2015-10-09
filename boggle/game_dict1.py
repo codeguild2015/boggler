@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # not if we import it into boggler.py
     from test_harness import testEQ
     read(open("shortdict.txt"))
-    # shortdict contains "alpha", "beta","delta", "gamma", "omega" """
+    #shortdict contains "alpha", "beta","delta", "gamma", "omega"
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
     testEQ("Last word in dictionary (omega)", search("omega"), WORD)
     testEQ("Within dictionary (beta)", search("beta"), WORD)
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     testEQ("Interior non-word (hagiography)",
     search("hagiography"), NO_MATCH)
     # Try again with only words of length at least 5
-    # Now beta should be absent"""
+    # Now beta should be absent
     read(open("shortdict.txt"), min_length=5)
     #print("New dictionary: ", dict)
     testEQ("First word in dictionary (alpha)", search("alpha"), WORD)
@@ -123,3 +123,4 @@ if __name__ == "__main__":
     read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
+    
