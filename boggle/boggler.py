@@ -1,7 +1,9 @@
 """
 Boggle solver finds words on a boggle board.
 Authors:  Connor and Cole
-Credits:
+Credits:  Whoever it was that wrote the original framing of this.
+          Connor and Cole just filled in the blanks for main and
+          find_words (as well as read and search in the game_dict)
 
 Usage:  python3 boggler.py  "board" dict.txt
     where "board" is 16 characters of board, in left-to-right reading order
