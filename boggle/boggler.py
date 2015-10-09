@@ -28,10 +28,10 @@ def main():
     dict_file, board_text = getargs()
     game_dict.read(dict_file)
     board = BoggleBoard(board_text)
-    results = []
     for x in range(4):
         for y in range(4):
-            results += find_words(board, x, y, board.get_char(x, y), results)
+            find_words(board, x, y, board.get_char(x, y))
+    results = board.results
     set_results = set(results)
     results = list(set_results)
     results.sort()
@@ -70,7 +70,7 @@ def getargs():
     return dictfile, text
 
 
-def find_words(board, row, col, prefix, results):
+def find_words(board, row, col, prefix):
     """Find all words starting with prefix that
     can be completed from row,col of board.
     Args:
@@ -90,14 +90,16 @@ def find_words(board, row, col, prefix, results):
             if board.available(x, y):
                 prefix += board.get_char(x, y)
                 if game_dict.search(prefix) == 1:
-                    results.append(prefix)
-                    results = find_words(board, x, y, prefix, results)
+                    board.results.append(prefix)
+                    find_words(board, x, y, prefix)
                 elif game_dict.search(prefix) == 2:
-                    find_words(board, x, y, prefix, results)
+                    find_words(board, x, y, prefix)
+                if board.get_char(x, y) == 'qu':
+                    prefix = prefix[:-2]
                 else:
                     prefix = prefix[:-1]
     board.unmark_taken(row, col)
-    return results
+    return
 
 
 def score(word):

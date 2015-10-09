@@ -10,14 +10,15 @@ or it does not match exactly but is a prefix of a word, or there is
 no word starting with that string.
 """
 
-words = [ ]  
+words = []
 
 # Codes for result of search
 WORD = 1
 PREFIX = 2
 NO_MATCH = 0
 
-def read( filename, min_length=3 ):
+
+def read(filename, min_length=3):
     """Read the dictionary from a sorted list of words.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
@@ -30,17 +31,18 @@ def read( filename, min_length=3 ):
     Returns:  nothing
     """
     global words
-    words = [ ]
+    words = []
     punctuation = ["'", '-', '/']
     f = filename
     wordlist = f.readlines()
     for word in wordlist:
             if len(word.strip()) >= min_length and not any(punc in word for punc in punctuation):
                 words.append(word.strip())
-    words = sorted(words) 
+    words = sorted(words)
     f.close()
-            
-def search( prefix ):
+
+
+def search(prefix):
     """Search for a prefix string in the dictionary.
     Args:
         str:  A string to look for in the dictionary
@@ -58,7 +60,7 @@ def search( prefix ):
         else:
             return NO_MATCH
 
-    
+
 ######################################################
 #  Test driver
 #    for testing game_dict.py by itself,
@@ -66,8 +68,8 @@ def search( prefix ):
 #   Note we will need shortdict.txt and dict.txt for
 #    testing.  Using the module does not require those files,
 #    but this suite of test cases requires exactly those files
-#    with exactly those names. 
-#   
+#    with exactly those names.
+#
 #
 #   To test your game_dict module, invoke it on the
 #   command line:
@@ -90,15 +92,14 @@ if __name__ == "__main__":
     testEQ("Within dictionary (gamma)", search("gamma"), WORD)
     testEQ("Prefix of first word (al)", search("al"), PREFIX)
     testEQ("Prefix of last word (om)", search("om"), PREFIX)
-    testEQ("Prefix of interior word (bet)", search("bet"),PREFIX)
-    testEQ("Prefix of interior word (gam)", search("gam"),PREFIX)
-    testEQ("Prefix of interior word (del)", search("del"),PREFIX)
+    testEQ("Prefix of interior word (bet)", search("bet"), PREFIX)
+    testEQ("Prefix of interior word (gam)", search("gam"), PREFIX)
+    testEQ("Prefix of interior word (del)", search("del"), PREFIX)
     testEQ("Before any word (aardvark)", search("aardvark"), NO_MATCH)
     testEQ("After all words (zephyr)", search("zephyr"), NO_MATCH)
     testEQ("Interior non-word (axe)", search("axe"), NO_MATCH)
     testEQ("Interior non-word (carrot)", search("carrot"), NO_MATCH)
-    testEQ("Interior non-word (hagiography)",
-        search("hagiography"), NO_MATCH)
+    testEQ("Interior non-word (hagiography)", search("hagiography"), NO_MATCH)
     # Try again with only words of length at least 5
     # Now beta should be absent
     read(open("shortdict.txt"), min_length=5)
@@ -109,6 +110,3 @@ if __name__ == "__main__":
     read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
-
-    
-    
