@@ -1,62 +1,51 @@
-import time
-results = []
-
 """
 Boggle solver finds words on a boggle board. 
-Authors:  #FIXME
-Credits: #FIXME 
+Authors:  Dana & Patrick 
+Credits: Not sure.  Some guy who wrote most of this code.
 
 Usage:  python3 boggler.py  "board" dict.txt
     where "board" is 16 characters of board, in left-to-right reading order
-    and dict.txt can be any file containing a list of words in alphabetical order
-    
+    and dict.txt can be any file containing a list of words in alphabetical order    
 """
 
 from boggle_board import BoggleBoard   
 import argparse   # Command line processing
 import game_dict  # Dictionary of legal game words
+results = []
+
 
 def main():
-    """
-    Main program: 
-    Find all words of length 3 or greater on a boggle 
+    """Main program: Find all words of length 3 or greater on a boggle 
     board. 
-    Args:
-        none (but expect two arguments on command line)
-    Returns: 
-        Nothing (but prints found words in alphabetical
-        order, without duplicates, one word per line)
-    """
+    
+    Parameters
+    ---------
+    Input:
+    None
+    pulls two arguments from the command line:
+        "board" is 16 characters of board, in left-to-right reading order
+        dict.txt is a file containing a list of words in alphabetical order
+    
+    Output:
+    None 
+        but prints found words in alphabetical order, without duplicates, 
+        one word per line)"""
+
     dict_file, board_text = getargs()
     game_dict.read( dict_file )
     board = BoggleBoard(board_text)
     results = [ ]
 
-    for x in range(4):
-        for y in range(4):
+    for x in range(4): # Creates range to hit all possible x values on board.
+        for y in range(4): # Creates range to hit all possible y values on board.
             results = find_words(board, x, y, board.get_char(x,y))
-    res_set = set(results)
-    final_list = score_list(res_set)
-    total = 0
-    for x, y in sorted(final_list):
-        print("{}: {}".format(x,y))
-        total += y
-    print("Total: ", total)
-
-
-    
-   
-
-
-
-
-
-    # FIXME: 
-    #    Search for words starting from each position on the board. 
-    #    Remove duplicates from results, and sort the list alphabetically.
-    #        (Write a separate function for deduplication)
-    #    Print each word and its score
-    #    Print total score
+    results_set = set(results)
+    final_list = score_list(results_set)
+    total_score = 0
+    for x, y in sorted(final_list): # Prints each word with associated score.
+        print("{} {}".format(x,y))
+        total_score += y
+    print("Total score:", total_score)
 
 
 def getargs():
@@ -204,4 +193,6 @@ def score_list(lst):
 if __name__ == "__main__":
     main()
     input("Press enter to end")
+
+   
 

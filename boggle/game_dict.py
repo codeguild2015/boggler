@@ -1,8 +1,8 @@
 """
 game_dict: Game dictionary.
 
-Authors:  Patrick McNally
-Consulted in design: Dana Medhaug
+Authors:  Patrick and Dana
+Consulted in design: Cole, Thunder and the internet
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
