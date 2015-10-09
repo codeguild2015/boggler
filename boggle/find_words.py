@@ -27,7 +27,7 @@ def find_words(board, row, col, prefix, results):
             if adj_tile_cnt > 8:   # call find_words and repeat on next tile
                 # next_row = row + 1
                 # next_col = col + 1  
-                find_words(board, next_row, next_col, prefix, results)
+                find_words(board, row + 1, next_col, prefix, results)
             #next_row = row + 1
             next_col = col + 1  
             if (next_row < 0 or next_col < 0) or (next_row > 1 or next_col > 1):
