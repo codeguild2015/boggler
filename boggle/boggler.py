@@ -79,7 +79,6 @@ def find_words(board, row, col, prefix):
         row:  row of position to continue from (need not be on board)
         col:  col of position to continue from (need not be on board)
         prefix: looking for words that start with this prefix
-        results: list of words found so far
     Returns: nothing
         (side effect is filling results list)
     Effects:
@@ -115,18 +114,21 @@ def score(word):
     7 gives 5
     8+ gives 11
     """
-    length = len(word)
-    if length <= 4:
-        return 1
-    elif length == 5:
-        return 2
-    elif length == 6:
-        return 3
-    elif length == 7:
-        return 5
-    else:
-        return 11
-
+    ans = {3: 1,
+           4: 1,
+           5: 2,
+           6: 3,
+           7: 5,
+           8: 11,
+           9: 11,
+           10: 11,
+           11: 11,
+           12: 11,
+           13: 11,
+           14: 11,
+           15: 11,
+           16: 11}
+    return ans[len(word)]
 
 ####
 # Run if invoked from command line
@@ -136,6 +138,10 @@ if __name__ == "__main__":
     assert score('act') == 1
     assert score('ecclesiastical') == 11
     assert score('please') == 3
+    # Commented out as the following generate a second board
+    # at runtime.  Other than that, the script operates normally
+    # with the following asserts live.
+    #
     # temp_board = BoggleBoard('abcxabcdabcdabcd')
     # temp_board.mark_taken(2, 2)
     # assert not temp_board.available(2, 2)
