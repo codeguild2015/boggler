@@ -1,3 +1,6 @@
+import time
+results = []
+
 """
 Boggle solver finds words on a boggle board. 
 Authors:  #FIXME
@@ -27,11 +30,31 @@ def main():
     dict_file, board_text = getargs()
     game_dict.read( dict_file )
     board = BoggleBoard(board_text)
-    results = [ ] 
+    results = [ ]
+
+    for x in range(4):
+        for y in range(4):
+            results = find_words(board, x, y, board.get_char(x,y))
+    res_set = set(results)
+    final_list = score_list(res_set)
+    total = 0
+    for x, y in sorted(final_list):
+        print("{}: {}".format(x,y))
+        total += y
+    print("Total: ", total)
+
+
+    
+   
+
+
+
+
+
     # FIXME: 
     #    Search for words starting from each position on the board. 
-    #    Remove duplicates from results, and sort the alphabetically.
-    #        (Write a separate function for dedu
+    #    Remove duplicates from results, and sort the list alphabetically.
+    #        (Write a separate function for deduplication)
     #    Print each word and its score
     #    Print total score
 
@@ -62,7 +85,9 @@ def getargs():
 
 
         
-def find_words(board, row, col, prefix, results):
+def find_words(board, row, col, str1):
+    global results
+    neighbors = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]
     """Find all words starting with prefix that
     can be completed from row,col of board.
     Args:
@@ -75,6 +100,27 @@ def find_words(board, row, col, prefix, results):
     Effects:
         inserts found words (not necessarily unique) into results
     """
+
+
+    board.mark_taken(row, col)
+    for x, y, in neighbors:
+        x += row
+        y += col
+        if board.available(x, y):
+            str1 += board.get_char(x, y)
+            if game_dict.search(str1) == 1:
+                results.append(str1)
+                find_words(board, x, y, str1)
+            elif game_dict.search(str1) == 2:
+                find_words(board, x, y, str1)
+            if board.get_char(x, y) == 'qu':
+                str1 = str1[:-2]
+            else:
+                str1 = str1[:-1]
+    board.unmark_taken(row, col)
+    return results
+            
+
 	# FIXME: one base case is that position row,col is not
 	#    available (could be off the board, could be currently
 	#    in use).  board.py can check that
@@ -98,15 +144,58 @@ def find_words(board, row, col, prefix, results):
     
     
 def score(word):
-    """
-    Compute the Boggle score for a word, based on the scoring table
-    at http://en.wikipedia.org/wiki/Boggle. 
-    #FIXME: finish writing this docstring
-     """
-	#FIXME  score the word correctly
-    return 0
+   """
+   Takes a string of words produced by running res_set.
 
+   Parameters
+   ---------
+   Input:
+   word: String
+   Word
 
+   Output:
+   int:
+   The score value of a word.
+   """
+
+   line_word = len(word)
+   if line_word == 3 or line_word == 4:
+       return 1
+   if line_word == 5:
+       return 2
+   if line_word == 6:
+       return 3
+   if line_word == 7:
+       return 5
+   if line_word >= 8:
+       return 11
+
+assert score("car") == 1
+assert score("this") == 1
+assert score("brady") == 2
+assert score("dragon") == 3
+assert score("fjibhrd") == 5
+assert score("hjsihfyd") == 11
+assert score("wfiwfjiwjsfjkejfiwjijefijie") == 11
+
+def score_list(lst):
+   """
+   Takes a list of words produced by running res_set.
+
+   Parameters
+   ---------
+   Input:
+   list: String
+   Word
+
+   Output:
+   int:
+   The score value of a word.
+   """
+   score_lst = []
+   for elem in lst:
+       score_lst.append((elem, score(elem)))
+   return score_lst
 
 ####
 # Run if invoked from command line
