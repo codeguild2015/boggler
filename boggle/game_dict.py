@@ -1,8 +1,8 @@
 """
 game_dict: Game dictionary.
 
-Authors:  Dana Medhaug
-Consulted in design: #FIXME
+Authors:  Patrick McNally
+Consulted in design: Dana Medhaug
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
@@ -17,7 +17,7 @@ WORD = 1
 PREFIX = 2
 NO_MATCH = 0
 
-def read(file1, min_length=3):
+def read(file1, min_length=3 ):
     """Read the dictionary from a sorted list of words.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
@@ -35,10 +35,8 @@ def read(file1, min_length=3):
         if len(line.strip()) >= min_length\
         and "-" not in line\
         and "'" not in line:
-            words.append(line.strip())
-        
-     #FIXME: read the dictionary file into words.  Skip words that
-    #   are too short or contain non-alphabetic characters
+            words.append(line.strip().lower())
+
     words = sorted(words)  # Being sorted is most important for binary search
             
 def search( str1 ):
@@ -58,8 +56,6 @@ def search( str1 ):
             if word.startswith(str1):
                 return PREFIX
         return NO_MATCH
-            
-        
 
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
