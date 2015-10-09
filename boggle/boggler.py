@@ -92,36 +92,47 @@ def find_words(board, row, col, prefix, results):
     if prefix == None:
         return "No prefixes!"
 
-    if board.available(row, col) is False:
-        return
+    print(row, col)
+
+    #if board.available(row, col) is False:
+    #    row = row + 1
+    #    col = col + 1
 
     if board.available(row, col) is True:
-        dictionary = ["alpha"]
+        #dictionary = ["alpha"]
         prefix = []
         row_offset = [-1, 0, 1]
         column_offset = [-1, 0, 1]
 
         strings_ = ""
-        counter = 1
+        #counter = 1
+        
         for i in row_offset:
             for j in column_offset:
-                counter += 1
+                #counter += 1
                 next_row = row + i
                 next_col = col + j  
-             
-                if (next_row >= 0 and next_col >= 0) and (next_row <= 3 and 
+                
+
+                if (row >= 0 and next_col >= 0) and (row <= 3 and 
                     next_col <= 3):
                     strings_ = strings_ + board.content[next_row][next_col]
-                    if strings_ is not "":    
-                        prefix.append(strings_)
+                 
+                    prefix.append(strings_)
                         #board.mark_taken(next_row, next_col)
                                               
-                    if counter == 9:
-                        find_words(board, next_row, next_col, 
-                            board.content[next_row][next_col], results)
-                        row = next_row - row
-                        col = next_col - col
-                            #print("next_row, col =", next_row, next_col)
+                    if i == 1 and j == 1:
+
+                        find_words(board, row, next_col, 
+                            board.content[row][next_col], results)
+                        
+
+
+                        #row = next_row - row
+                        #col = next_col - col
+
+
+                        #print("next_row, col =", next_row, next_col)
                         #print("row, col =", row, col)
 
             #find_words(board, row, col, board.content[row][col], results)
