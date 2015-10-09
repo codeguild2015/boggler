@@ -30,7 +30,8 @@ def read( file, min_length=3 ):
     Returns:  nothing
     """
     global words
-    words = [ ]
+    for word in file:
+        words.append(word.strip())
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
     words = sorted(words)  # Being sorted is most important for binary search
@@ -50,8 +51,8 @@ def search( prefix ):
            words.append(line.strip())
         if prefix in words:
             return WORD
-            else:
-        for word in words:
+        else:
+            for word in words:
             if word.startswith(prefix):
                 return PREFIX
 
