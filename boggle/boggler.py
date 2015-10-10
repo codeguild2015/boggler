@@ -31,7 +31,9 @@ def main():
     
     results = [ ] 
     #game_dict = game_dict.read( dict_file ) #KS: added this to initialize
+    
     init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
+
     
     # FIXME: 
     #    Search for words starting from each position on the board. 
@@ -88,64 +90,28 @@ def find_words(board, row, col, prefix, results):
             col = row[column]
     """
     #cur_word = board.content[row][col] # !! KS this isn't called again
-
+        
     if prefix == None:
-        return "No prefixes!"
+        return "No prefixes!" # Do something here
 
-    print(row, col)
+    if board.available(row, col) is False:
+        return "Not available!"
 
-    #if board.available(row, col) is False:
-    #    row = row + 1
-    #    col = col + 1
+    else:
+        #board.get_char(row, col)
+        results.append(board.get_char(row,col))
+        board.mark_taken(row, col) 
+        offset = [-1, 0, 1]
+        for i in offset:
+            for j in offset:
+                if board.available(row + i, col + j) is False:
+                    continue
+                else:
+                    print(results)
+                    find_words(board, row + i, col + j, 
+                            board.get_char(row + i, col + j), results)
 
-    if board.available(row, col) is True:
-        #dictionary = ["alpha"]
-        prefix = []
-        row_offset = [-1, 0, 1]
-        column_offset = [-1, 0, 1]
-
-        strings_ = ""
-        #counter = 1
-        
-        for i in row_offset:
-            for j in column_offset:
-                #counter += 1
-                next_row = row + i
-                next_col = col + j  
-                
-
-                if (row >= 0 and next_col >= 0) and (row <= 3 and 
-                    next_col <= 3):
-                    strings_ = strings_ + board.content[next_row][next_col]
                  
-                    prefix.append(strings_)
-                        #board.mark_taken(next_row, next_col)
-                                              
-                    if i == 1 and j == 1:
-
-                        find_words(board, row, next_col, 
-                            board.content[row][next_col], results)
-                        
-
-
-                        #row = next_row - row
-                        #col = next_col - col
-
-
-                        #print("next_row, col =", next_row, next_col)
-                        #print("row, col =", row, col)
-
-            #find_words(board, row, col, board.content[row][col], results)
-        
-        #find_words(board, next_row, next_col, board.content[next_row][next_col], 
-        #    results)
-
-        print(prefix)
-
-
-        #for words in prefix:
-        #    if words in game_dict:
-
    
     #find_words(board, next_row, next_col, prefix, results )
 
@@ -167,7 +133,7 @@ def find_words(board, row, col, prefix, results):
 	#    around it, and finally mark it as no longer in use. See board.py
 	#    for how to mark and unmark tiles, and how to get the text
 	#    on the current tile.     
-    return
+    
     
     
     
@@ -179,8 +145,6 @@ def score(word):
      """
 	#FIXME  score the word correctly
     return 0
-
-
 
 ####
 # Run if invoked from command line
