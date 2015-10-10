@@ -28,13 +28,11 @@ def main():
     game_dict.read( dict_file )
     
     board = BoggleBoard(board_text)
-    
     results = [ ] 
-    #game_dict = game_dict.read( dict_file ) #KS: added this to initialize
-    
     init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
 
-    
+    print(results)
+
     # FIXME: 
     #    Search for words starting from each position on the board. 
     #    Remove duplicates from results, and sort them alphabetically.
@@ -98,7 +96,6 @@ def find_words(board, row, col, prefix, results):
         return "Not available!"
 
     else:
-        #board.get_char(row, col)
         results.append(board.get_char(row,col))
         board.mark_taken(row, col) 
         offset = [-1, 0, 1]
@@ -107,11 +104,10 @@ def find_words(board, row, col, prefix, results):
                 if board.available(row + i, col + j) is False:
                     continue
                 else:
-                    print(results)
+                    (results)
                     find_words(board, row + i, col + j, 
                             board.get_char(row + i, col + j), results)
 
-                 
    
     #find_words(board, next_row, next_col, prefix, results )
 
