@@ -208,7 +208,7 @@ def find_words(board, row, col, prefix, results):
 
     for i in range(-1, 2):
         for j in range(-1, 2):
-            if board.available(row + j, col + i) is True:
+            if board.available(row + i, col + j) is True:
                 print('get_char looking for location: ', row + i, col + j)
                 find_words(board, row + i, col + j, results, results) # need to fix args
             else:
