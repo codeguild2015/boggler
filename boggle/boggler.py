@@ -1,3 +1,6 @@
+# A script to solve a Boggle board.
+#
+
 """
 Boggle solver finds words on a boggle board. 
 Authors:  #FIXME
@@ -26,19 +29,16 @@ def main():
     """
     dict_file, board_text = getargs()
     game_dict.read( dict_file )
-    
     board = BoggleBoard(board_text)
-    results = [ ] 
-    init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
 
-    print(results)
+    results = []
+    for row in range(4):
+        for col in range(4):
+             init_find_words = find_words(board, row, col, board.get_char(row,col), results)
 
-    # FIXME: 
-    #    Search for words starting from each position on the board. 
-    #    Remove duplicates from results, and sort them alphabetically.
-    #        (Write a separate function for dedu
-    #    Print each word and its score
-    #    Print total score
+    results.sort()
+    final = score(results)
+    print("Total score:", final)
 
 
 def getargs():
@@ -80,67 +80,48 @@ def find_words(board, row, col, prefix, results):
     Effects:
         inserts found words (not necessarily unique) into results
     """
-
-    """Extracting content
-    for item in BoggleBoard.content:
-        row = BoggleBoard.content[item]
-        for column in row: 
-            col = row[column]
-    """
-    #cur_word = board.content[row][col] # !! KS this isn't called again
-        
-    if prefix == None:
-        return "No prefixes!" # Do something here
+    if prefix is None:
+        return "You must start with a prefix!"
 
     if board.available(row, col) is False:
-        return "Not available!"
+        return "Tile not available!"
+    
+    board.mark_taken(row, col) 
+    offset = [-1, 0, 1]
+    for i in offset:
+        for j in offset:
+            if board.available(row + i, col + j) is True:
+                prefix += board.get_char(row + i, col + j)
+                if game_dict.search(prefix) == 1: # These are words.
+                    results.append(prefix)
+                    find_words(board, row + i, col + j, prefix, results)
+                elif game_dict.search(prefix) == 2: # These are prefixes.
+                    find_words(board, row + i, col + j, prefix, results)
+    board.unmark_taken(row, col) # unmark before kicking back to main.
 
-    else:
-        results.append(board.get_char(row,col))
-        board.mark_taken(row, col) 
-        offset = [-1, 0, 1]
-        for i in offset:
-            for j in offset:
-                if board.available(row + i, col + j) is False:
-                    continue
-                else:
-                    (results)
-                    find_words(board, row + i, col + j, 
-                            board.get_char(row + i, col + j), results)
-
-   
-    #find_words(board, next_row, next_col, prefix, results )
-
-	# FIXME: one base case is that position row,col is not
-	#    available (could be off the board, could be currently
-	#    in use).  board.py can check that
-	# FIXME:  For the remaining cases, where the tile at row,col 
-	#    is available, we need to consider the new prefix that 
-	#    includes the letter on this tile
-	# FIXME:  Another base case is that no word can start with 
-	#    the current prefix.  No use searching further on that path.
-	# FIXME:  If the current position is a complete word, it is NOT 
-	#    a base case, because it might also be part of a longer word. 
-	#    We save the word we found into the global results list, and
-	#    continue with the recursive case. 
-	# FIXME: The recursive case is when the current prefix (including
-	#    the tile at row,col) is a possible prefix of a word.  We 
-	#    must mark it as currently in use, then search in all 8 directions
-	#    around it, and finally mark it as no longer in use. See board.py
-	#    for how to mark and unmark tiles, and how to get the text
-	#    on the current tile.     
-    
-    
-    
-    
+      
 def score(word):
     """
     Compute the Boggle score for a word, based on the scoring table
     at http://en.wikipedia.org/wiki/Boggle. 
     #FIXME: finish writing this docstring
      """
-	#FIXME  score the word correctly
-    return 0
+    score_dct = {1 : 0, 2 : 0, 3 : 1, 4: 1, 5 : 2, 6 : 3, 7 : 5,}
+    final_score = []
+    for item in word:
+        if len(item) >= 8:
+            final_score.append(11)
+        else:
+            final_score.append(score_dct[len(item)])
+    for i in range(len(final_score)):
+        print (word[i], final_score[i])
+            
+    final_score = sum(final_score)
+    
+    return(final_score)
+                          
+    assert score(["alp", "alpha", "gal", "gamma", "hap", "lag", "lam", 
+        "mag", "max"]) == 11 
 
 ####
 # Run if invoked from command line
