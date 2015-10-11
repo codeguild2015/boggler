@@ -8,6 +8,7 @@ Usage:  python3 boggler.py  "board" dict.txt
     and dict.txt can be any file containing a list of words in alphabetical order    
 """
 
+import datetime
 from boggle_board import BoggleBoard   
 import argparse   # Command line processing
 import game_dict  # Dictionary of legal game words
@@ -16,12 +17,6 @@ word_dict = []
 
 
 def main():
-    global word_dict
-
-
-
-
-    
     """Main program: Find all words of length 3 or greater on a boggle 
     board. 
     
@@ -41,19 +36,6 @@ def main():
     dict_file, board_text = getargs()
     word_dict = game_dict.read( dict_file )
     board = BoggleBoard(board_text)
-
-
-    assert game_dict.search("al", word_dict) == 2
-    assert game_dict.search("alp", word_dict) == 1
-    assert game_dict.search("alph", word_dict) == 2
-    assert game_dict.search("alpha", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-    assert game_dict.search("gal", word_dict) == 1
-
 
     for x in range(4): # Creates range to hit all possible x values on board.
         for y in range(4): # Creates range to hit all possible y values on board.
@@ -109,8 +91,7 @@ def find_words(board, row, col, str1):
     results: set
     A set of all unique words found on the boggle board  
     """
-
-
+    
     global results
     neighbors = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]
 
@@ -214,8 +195,13 @@ def score_list(lst):
 ####
 
 if __name__ == "__main__":
+    start = datetime.datetime.now()
     main()
-    input("Press enter to end")
+    end = datetime.datetime.now()
+    delta = end - start
+    # input("Press enter to end")
+    print("\nTotal process took ", datetime.timedelta.total_seconds(delta), "seconds.")
+
 
    
 
