@@ -46,8 +46,8 @@ def search(str1, lst):
         or str1 == lst[min]\
         or str1 == lst[max-1]:
             return WORD
-        elif lst[min].startswith(str1)\
-        or lst[max//2].startswith(str1)\
+        elif lst[max//2].startswith(str1)\
+        or lst[min].startswith(str1)\
         or lst[max-1].startswith(str1):      
             return PREFIX
         else:
