@@ -39,8 +39,6 @@ def read(file1, min_length=3 ):
     return words        
 
 def search(str1, lst):
-    temp_lst = lst
-
     def is_word(str1, lst):
         max = len(lst)
         min = 0
@@ -73,7 +71,7 @@ def search(str1, lst):
     if val == WORD:
         return WORD
     if val == NO_MATCH:
-        if is_prefix(str1, temp_lst) == PREFIX:
+        if is_prefix(str1, lst) == PREFIX:
             return PREFIX
         else: 
             return NO_MATCH
