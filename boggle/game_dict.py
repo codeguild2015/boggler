@@ -39,42 +39,58 @@ def read(file1, min_length=3 ):
     return words        
 
 def search(str1, lst):
-    def is_word(str1, lst):
-        max = len(lst)
-        min = 0
-        if str1 == lst[max//2]:
-            return WORD
-        if max//2 == 0:
-            return NO_MATCH
+    max = len(lst)
+    min = 0
+    if max <= 3:
+        if str1 in lst:
+            return word
         else:
-            if str1 > lst[max//2]:
-                return is_word(str1, lst[max//2:])
-            else:
-                return is_word(str1, lst[:max//2])
+            return prefix
+    if lst[max//2].startswith(str1):
+        return search(str1, lst[max//2:])
+    if max//2 == 0:
+        return NO_MATCH
+    else:
+        if str1 > lst[max//2]:
+            return search(str1, lst[max//2:])
+        else:
+            return search(str1, lst[:max//2])
+    # def is_word(str1, lst):
+    #     max = len(lst)
+    #     min = 0
+    #     if str1 == lst[max//2]:
+    #         return WORD
+    #     if max//2 == 0:
+    #         return NO_MATCH
+    #     else:
+    #         if str1 > lst[max//2]:
+    #             return is_word(str1, lst[max//2:])
+    #         else:
+    #             return is_word(str1, lst[:max//2])
 
 
-    def is_prefix(str1, lst):
-        max = len(lst)
-        min = 0
-        if lst[max//2].startswith(str1):
-            return PREFIX
-        if max//2 == 0:
-            return NO_MATCH
-        else:
-            if str1 > lst[max//2]:
-                return is_prefix(str1, lst[max//2:])
-            else:
-                return is_prefix(str1, lst[:max//2])
+    # def is_prefix(str1, lst):
+    #     max = len(lst)
+    #     min = 0
+    #     if lst[max//2].startswith(str1):
+    #         return PREFIX
+    #     if max//2 == 0:
+    #         return NO_MATCH
+    #     else:
+    #         if str1 > lst[max//2]:
+    #             return is_prefix(str1, lst[max//2:])
+    #         else:
+    #             return is_prefix(str1, lst[:max//2])
 
     
-    val = is_word(str1, lst)
-    if val == WORD:
-        return WORD
-    if val == NO_MATCH:
-        if is_prefix(str1, lst) == PREFIX:
-            return PREFIX
-        else: 
-            return NO_MATCH
+    # val = is_word(str1, lst)
+    # if val == WORD:
+    #     return WORD
+    # if val == NO_MATCH:
+    #     if is_prefix(str1, lst) == PREFIX:
+    #         return PREFIX
+    #     else: 
+    #         return NO_MATCH
 
 
 # def search(str1, words ):
