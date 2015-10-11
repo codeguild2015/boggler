@@ -29,10 +29,12 @@ def main():
     
     board = BoggleBoard(board_text)
     results = [ ] 
-    init_find_words = find_words(board, 0, 0, board.get_char(0,0), results)
-    #final = ''.join(results)
-    print("results list is", results)
+    
+    for row in range(4):
+        for col in range(4):
+             init_find_words = find_words(board, row, col, board.get_char(row,col), results)
 
+    print(results)
 
     # FIXME: 
     #    Search for words starting from each position on the board. 
@@ -88,8 +90,10 @@ def find_words(board, row, col, prefix, results):
         for column in row: 
             col = row[column]
     """
-    #cur_word = board.content[row][col] # !! KS this isn't called again
-        
+    
+    results.append(board.get_char(row, col))
+    board.mark_taken(row, col)    
+
     if prefix == None:
         return "No prefixes!" # Do something here
 
@@ -97,32 +101,15 @@ def find_words(board, row, col, prefix, results):
         return "Not available!"
 
     else:
-        results.append(board.get_char(row,col))
-        board.mark_taken(row, col) 
-        #results = ["".join(results)]
-        #print(results)
-        for item in results:
-            if game_dict.search(item) == 1:
-                continue
-            if game_dict.search(item) == 0: 
-                results.remove(item)
-            if game_dict.search(item) == 2: # if string is a prefix, continue
-                results = ["".join(results)]
-                print(results)
-                offset = [-1, 0, 1]
-                for i in offset:
-                    for j in offset:
-                        if board.available(row + i, col + j) is False: # if 
-                                                # not available, move to a position
-                                                # that is available.
-                            continue
-                        else:
-                            find_words(board, row + i, col + j, 
-                                    board.get_char(row + i, col + j), results)
-
-
-
-
+        if game_dict.search(prefix) == 2:
+            offset = [-1, 0, 1]
+            for i in offset:
+                for j in offset:
+                    if board.available(row + i, col + j) is True:
+                        continue
+                    else:
+                        find_words(board, row + i, col + j, 
+                                board.get_char(row + i, col + j), results)
 
    
     #find_words(board, next_row, next_col, prefix, results )
