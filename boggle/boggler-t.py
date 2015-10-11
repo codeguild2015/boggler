@@ -91,25 +91,28 @@ def find_words(board, row, col, prefix, results):
             col = row[column]
     """
     
-    results.append(board.get_char(row, col))
-    board.mark_taken(row, col)    
+    visited, stack = set(), [prefix] # keeps track of what we visited.
+    while stack:
+        vertex = stack.pop()    
+        results.append(board.get_char(row, col))
+        board.mark_taken(row, col)    
 
-    if prefix == None:
-        return "No prefixes!" # Do something here
+        if prefix == None:
+            return "No prefixes!" # Do something here
 
-    if board.available(row, col) is False:
-        return "Not available!"
+        if board.available(row, col) is False:
+            return "Not available!"
 
-    else:
-        if game_dict.search(prefix) == 2:
-            offset = [-1, 0, 1]
-            for i in offset:
-                for j in offset:
-                    if board.available(row + i, col + j) is True:
-                        continue
-                    else:
-                        find_words(board, row + i, col + j, 
-                                board.get_char(row + i, col + j), results)
+        else:
+            if game_dict.search(prefix) == 2:
+                offset = [-1, 0, 1]
+                for i in offset:
+                    for j in offset:
+                        if board.available(row + i, col + j) is True:
+                            continue
+                        else:
+                            find_words(board, row + i, col + j, 
+                                    board.get_char(row + i, col + j), results)
 
    
     #find_words(board, next_row, next_col, prefix, results )
@@ -142,8 +145,22 @@ def score(word):
     at http://en.wikipedia.org/wiki/Boggle. 
     #FIXME: finish writing this docstring
      """
-	#FIXME  score the word correctly
-    return 0
+    score_dct = {3 : 1, 4: 1, 5 : 2, 6 : 3, 7 : 5,}
+    final_score = []
+    for word in results:
+        if len(word) >= 8:
+            final_score.append(11)
+        else:
+            final_score.append(score_dct[len(word)])
+    for i in range(len(final_score)):
+        print (results[i], final_score[i])
+            
+    final_score = sum(final_score)
+    
+    return(final_score)
+                          
+    assert score(["alp", "alpha", "gal", "gamma", "hap", "lag", "lam", 
+        "mag", "max"]) = 11 
 
 ####
 # Run if invoked from command line
