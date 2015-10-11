@@ -9,8 +9,7 @@ has three possible outcomes:  The string matches a word exactly,
 or it does not match exactly but is a prefix of a word, or there is
 no word starting with that string.
 """
-
-words = [ ]  
+ 
 
 # Codes for result of search
 WORD = 1
@@ -29,33 +28,74 @@ def read(file1, min_length=3 ):
             more letters count.
     Returns:  nothing
     """
-    global words
+
     words = [ ]
     for line in file1:
         if len(line.strip()) >= min_length\
         and "-" not in line\
         and "'" not in line:
             words.append(line.strip().lower())
-
     words = sorted(words)  # Being sorted is most important for binary search
-            
-def search( str1 ):
-    """Search for a prefix string in the dictionary.
-    Args:
-        str:  A string to look for in the dictionary
-    Returns:
-        code WORD if str exactly matches a word in the dictionary,
-            PREFIX if str does not match a word exactly but is a prefix
-                of a word in the dictionary, or
-        NO_MATCH if str is not a prefix of any word in the dictionary
-    """
-    if str1 in words:
+    return words        
+
+def search(str1, lst):
+    temp_lst = lst
+
+    def is_word(str1, lst):
+        max = len(lst)
+        min = 0
+        if str1 == lst[max//2]:
+            return WORD
+        if max//2 == 0:
+            return NO_MATCH
+        else:
+            if str1 > lst[max//2]:
+                return is_word(str1, lst[max//2:])
+            else:
+                return is_word(str1, lst[:max//2])
+
+
+    def is_prefix(str1, lst):
+        max = len(lst)
+        min = 0
+        if lst[max//2].startswith(str1):
+            return PREFIX
+        if max//2 == 0:
+            return NO_MATCH
+        else:
+            if str1 > lst[max//2]:
+                return is_prefix(str1, lst[max//2:])
+            else:
+                return is_prefix(str1, lst[:max//2])
+
+    
+    val = is_word(str1, lst)
+    if val == WORD:
         return WORD
-    else:
-        for word in words:
-            if word.startswith(str1):
-                return PREFIX
-        return NO_MATCH
+    if val == NO_MATCH:
+        if is_prefix(str1, temp_lst) == PREFIX:
+            return PREFIX
+        else: 
+            return NO_MATCH
+
+
+# def search(str1, words ):
+#     """Search for a prefix string in the dictionary.
+#     Args:
+#         str:  A string to look for in the dictionary
+#     Returns:
+#         code WORD if str exactly matches a word in the dictionary,
+#             PREFIX if str does not match a word exactly but is a prefix
+#                 of a word in the dictionary, or
+#         NO_MATCH if str is not a prefix of any word in the dictionary
+#     """
+#     if str1 in words:
+#         return WORD
+#     else:
+#         for word in words:
+#             if word.startswith(str1):
+#                 return PREFIX
+#         return NO_MATCH
 
     # FIXME: I suggest using a linear search first, checking for exact matches
     # with == and then for partial matches with the "startswith" function, e.g.,
