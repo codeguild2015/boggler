@@ -34,10 +34,12 @@ def main():
     results = []
     for row in range(4):
         for col in range(4):
-             init_find_words = find_words(board, row, col, board.get_char(row,col), results)
+            init_find_words = find_words(board, row, col, board.get_char(row,col), results)
 
-    results.sort()
-    final = score(results)
+    set_ = set(results)
+    fin_list = list(set_)
+    fin_list.sort()
+    final = score(fin_list)
     print("Total score:", final)
 
 
@@ -90,21 +92,30 @@ def find_words(board, row, col, prefix, results):
     offset = [-1, 0, 1]
     for i in offset:
         for j in offset:
-            if board.available(row + i, col + j) is True:
-                prefix += board.get_char(row + i, col + j)
+            if board.available(row + i, col + j):
+                prefix += board.get_char(row + i, col + j)  
+                print(prefix)
                 if game_dict.search(prefix) == 1: # These are words.
                     results.append(prefix)
                     find_words(board, row + i, col + j, prefix, results)
                 elif game_dict.search(prefix) == 2: # These are prefixes.
                     find_words(board, row + i, col + j, prefix, results)
-    board.unmark_taken(row, col) # unmark before kicking back to main.
+                elif game_dict.search(prefix) == 0:
+                    prefix = prefix[:-1] # If not words,start again from the 
+                                         #last letter.
+    board.unmark_taken(row, col) # Unmark before kicking back to main.
 
       
 def score(word):
     """
     Compute the Boggle score for a word, based on the scoring table
     at http://en.wikipedia.org/wiki/Boggle. 
-    #FIXME: finish writing this docstring
+    Words < 3 letters are not awarded any points.
+    Words 3-4 letters long are awarded 1 point.
+    Words 5 letters long are awarded 2 points. 
+    Words 6 letters long are awarded 3 points.
+    Words 7 letters long are awarded 5 points. 
+    Words greater than 8 letters long are worth 11 points.
      """
     score_dct = {1 : 0, 2 : 0, 3 : 1, 4: 1, 5 : 2, 6 : 3, 7 : 5,}
     final_score = []
@@ -120,8 +131,10 @@ def score(word):
     
     return(final_score)
                           
+    """Assert Tests"""
     assert score(["alp", "alpha", "gal", "gamma", "hap", "lag", "lam", 
         "mag", "max"]) == 11 
+    assert score(["redundant" == 11])
 
 ####
 # Run if invoked from command line
