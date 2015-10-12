@@ -1,8 +1,8 @@
 """
 game_dict: Game dictionary.
 
-Authors:  #FIXME
-Consulted in design: #FIXME
+Authors:  Kevin and Ransom
+Consulted in design: Michael Young, Thunder Shiviah
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
@@ -63,14 +63,17 @@ def search( prefix ):
         return WORD
     if len(matches) >= 1:
         return PREFIX
-
-  
-    # FIXME: I suggest using a linear search first, checking for exact matches
-    # with == and then for partial matches with the "startswith" function, e.g.,
-    # words[i].startswith(prefix). 
-    # Once you get the whole program working, you can make it much, much faster
-    # using a binary search (which we will discuss in class). 
     
+    """
+    if [1 for word in words if word == prefix]:
+        return 1
+
+    if [2 for word in words if word.startswith(prefix)]:
+        return 2
+
+    return 0
+    """
+   
     
 ######################################################
 #  Test driver

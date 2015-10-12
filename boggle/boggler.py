@@ -1,5 +1,6 @@
-# A script to solve a Boggle board.
-#
+# A script to solve a Boggle board. 
+
+__author__ = "Kevin and Ransom, Michael Young, PDX Code Guild 2015 Class"
 
 """
 Boggle solver finds words on a boggle board. 
@@ -92,18 +93,21 @@ def find_words(board, row, col, prefix, results):
     offset = [-1, 0, 1]
     for i in offset:
         for j in offset:
-            if board.available(row + i, col + j):
+            if board.available(row + i, col + j) is True:
                 prefix += board.get_char(row + i, col + j)  
-                print(prefix)
-                if game_dict.search(prefix) == 1: # These are words.
+                #print("Current search!", row, col, prefix)
+                if game_dict.search(prefix) == 1: # These are words in the dictionary.
                     results.append(prefix)
+                    #print("I found a word!", row, col, prefix)
                     find_words(board, row + i, col + j, prefix, results)
-                elif game_dict.search(prefix) == 2: # These are prefixes.
+                elif game_dict.search(prefix) == 2: # These are prefixes in the dictionary.
                     find_words(board, row + i, col + j, prefix, results)
-                elif game_dict.search(prefix) == 0:
-                    prefix = prefix[:-1] # If not words,start again from the 
-                                         #last letter.
-    board.unmark_taken(row, col) # Unmark before kicking back to main.
+                    #print("I found a prefix!", row, col, prefix)
+
+                else: # game_dict.search(prefix) == 0:
+                    prefix = prefix[:-1] # If prefix is not a word or known prefix,
+                                         # start again from the last letter.
+    board.unmark_taken(row, col) 
 
       
 def score(word):
