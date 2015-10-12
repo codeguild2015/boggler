@@ -35,7 +35,7 @@ def read(file1, min_length=3 ):
         and "-" not in line\
         and "'" not in line:
             words.append(line.strip().lower())
-    words = sorted(words)  # Being sorted is most important for binary search
+    words = sorted(words)  # Being sorted is essential for binary search
     return words        
 
 def search(str1, lst):

@@ -13,7 +13,7 @@ from boggle_board import BoggleBoard
 import argparse   # Command line processing
 import game_dict  # Dictionary of legal game words
 results = set()
-word_dict = []
+
 
 
 def main():
@@ -33,6 +33,8 @@ def main():
         but prints found words in alphabetical order, without duplicates, 
         one word per line)"""
 
+    
+    global word_dict
     dict_file, board_text = getargs()
     word_dict = game_dict.read( dict_file )
     board = BoggleBoard(board_text)
