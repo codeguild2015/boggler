@@ -20,14 +20,17 @@ NO_MATCH = 0
 
 def read(filename, min_length=3):
     """Read the dictionary from a sorted list of words.
+
     Args:
-        file: dictionary file (list of words, in alphabetical order), already open
+        file: dictionary file (list of words, in alphabetical order), already\
+              open
         min_length: integer, minimum length of words to
             include in dictionary. Useful for games in
             which short words don't count.  For example,
             in Boggle the limit is usually 3, but in
             some variations of Boggle only words of 4 or
             more letters count.
+
     Returns:  nothing
     """
     global words
@@ -36,32 +39,38 @@ def read(filename, min_length=3):
     f = filename
     wordlist = f.readlines()
     for word in wordlist:
-            if len(word.strip()) >= min_length and not any(punc in word for punc in punctuation):
+            if len(word.strip()) >= min_length and not any(punc in word for
+                                                           punc in punctuation):
                 words.append(word.strip())
     words = sorted(words)
-    f.close()
 
 
 def search(prefix):
     """Search for a prefix string in the dictionary.
+
     Args:
        str:  A string to look for in the dictionary
+
     Returns:
-       code WORD if str exactly matches a word in the dictionary,
+       code:
+           WORD if str exactly matches a word in the dictionary,
            PREFIX if str does not match a word exactly but is a prefix
                of a word in the dictionary, or
-       NO_MATCH if str is not a prefix of any word in the dictionary
+           NO_MATCH if str is not a prefix of any word in the dictionary
     """
     x = len(words)
 
     def dict_search(prefix, low=0, hi=x):
 
-        mid = int((low+hi)/2)
-        answer = 3
+        mid = (low+hi)//2
+        answer = None
         if prefix == words[mid] or low == mid:
-            if prefix == words[low] or prefix == words[hi] or prefix == words[mid]:
+            if (prefix == words[low] or
+               prefix == words[hi] or
+               prefix == words[mid]):
                 return WORD
-            elif words[hi].startswith(prefix) or words[low].startswith(prefix):
+            elif words[hi].startswith(prefix) or\
+                words[low].startswith(prefix):
                 return PREFIX
             else:
                 return NO_MATCH
@@ -72,7 +81,6 @@ def search(prefix):
         return answer
 
     return dict_search(prefix, 0, x)
-
 
 
 ######################################################

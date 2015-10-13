@@ -71,8 +71,10 @@ class BoggleBoard(object):
            self: this board
            row: row of board, 0..3
            col: col of board, 0..3
+
         Returns:
            the string labeling the tile at board[row,col]
+        
         Requires:
            the position (row, col) should not be in use when get_char is called.
            (Proper order is to get_char(row,col), then mark_taken(row,col), then
@@ -85,10 +87,12 @@ class BoggleBoard(object):
 
     def available(self, row, col):
         """Check whether we can take a tile at row, col.
+        
         Args:
           self: this board
           row: row of board (may be outside board)
           col: col of board (may be outside board)
+        
         Returns:
            boolean True iff (row,col) is a tile position on
            the board and that tile is not currently marked as
@@ -102,12 +106,15 @@ class BoggleBoard(object):
 
     def mark_taken(self, row, col):
         """ Marks the tile at row,col as currently in use
+        
         Args:
           self: this board
           row: row of board, 0..3
           col: col of board, 0..3
+        
         Returns:
           nothing
+        
         Requires:
           Tile must not already be in use.  mark_taken and unmark_taken must
           strictly alternate.  Proper sequence is
@@ -128,12 +135,15 @@ class BoggleBoard(object):
         """
         Marks the tile at row,col as no longer in use.
         Tile at row,col must be in use when this function is called.
+        
         Args:
           self: this board
           row: row of board, 0..3
           col: col of board, 0..3
+        
         Returns:
           nothing
+        
         Requires:
           Tile must be marked in use.  mark_taken and unmark_taken must
           strictly alternate.  Proper sequence is
@@ -153,9 +163,11 @@ class BoggleBoard(object):
 
     def dump(self):
         """For debugging: Print representation of board
-          Args:
+          
+        Args:
             self:  this board
-          Returns: nothing
+          
+        Returns: nothing
         """
         print(self.content)
 
@@ -163,7 +175,8 @@ class BoggleBoard(object):
         """For debugging: Return string representation of board.
           The __str__ method is called implicitly when the board is
           printed or when it is coerced into a string.
-          Args:
+          
+        Args:
             self:  this board
         """
         rep = ""
