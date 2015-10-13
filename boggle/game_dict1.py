@@ -1,8 +1,8 @@
 """
 game_dict: Game dictionary.
 
-Authors:  Skip & Nick
-Consulted in design: PDX CodeGuild
+Authors:  Skip and Nick
+Credits: #FIXME, Cole, Thunder, Google
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
@@ -29,6 +29,14 @@ def read( file, min_length=3 ):
             more letters count.
     Returns:  nothing
     """
+	
+	
+	"""Patrick
+	workds = []
+	forline in file1:
+	    #workds need to be pre-st
+	"""
+	
     global words
     words = [ ]
     for line in file:
