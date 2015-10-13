@@ -121,7 +121,6 @@ def find_words(board, row, col, str1):
                 str1 = str1[:-2]
             else:
                 str1 = str1[:-1]
-
     board.unmark_taken(row, col) # unmarks a square before leaving the square.
     return results
             
@@ -213,4 +212,4 @@ def score_list(lst):
 
 if __name__ == "__main__":
     main()
-    input("Press enter to end")
+    # input("Press enter to end")
