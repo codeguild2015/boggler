@@ -11,26 +11,25 @@ no word starting with that string.
 """
  
 
-# Codes for result of search
-WORD = 1
-PREFIX = 2
-NO_MATCH = 0
-
 def read(file1, min_length=3 ):
-    """Read the dictionary from a sorted list of words.
+    """Builds the game dictionary from a sorted list of words.
+
+    Itterates through a provided list of words.  All words of an appropriate 
+        length (default 3 letters or longer) and playable in Boggle are added 
+        to the final result which is returned.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
-        min_length: integer, minimum length of words to
-            include in dictionary. Useful for games in
-            which short words don't count.  For example,
-            in Boggle the limit is usually 3, but in
-            some variations of Boggle only words of 4 or
-            more letters count.
-    Returns:  nothing
+        min_length: integer, minimum length of words to include in 
+            dictionary. Useful for games in which short words don't count.  
+            For example, in Boggle the limit is usually 3, but in some 
+            variations of Boggle only words of 4 or more letters count.
+    Returns:  
+        words: a list of words conforming to boggle rules in aphabetical order.
     """
 
     words = [ ]
     for line in file1:
+        # words need to be pre-stripped to eliminate whitepace issues counting len
         if len(line.strip()) >= min_length\
         and "-" not in line\
         and "'" not in line:
@@ -39,6 +38,28 @@ def read(file1, min_length=3 ):
     return words        
 
 def search(str1, lst):
+    """Search function.
+
+    Compares a string to a list of words.  Returns either
+    that the string is a word, a prefix of at least 1 word or not in the list.
+   
+    Parameters
+    ---------
+    Args:
+        str1: A string to be compared against a dictionary[list of words].
+        words: A list of words to be searched.
+
+    Returns:
+        WORD: A variable denoting that the string input is a word in the list
+        PREFIX: A variable denoting that the string input is a prefix 
+            of at least 1 word in the list.
+        NO_MATCH: A variable denoting that the string input is a word in the list
+    """
+    # Codes for result of search
+    WORD = 1
+    PREFIX = 2
+    NO_MATCH = 0
+
     max = len(lst)
     min = 0
     if lst[max//2] == str1 or max <= 3:
@@ -59,16 +80,26 @@ def search(str1, lst):
             return search(str1, lst[max//2:])
 
 
-# def search_linear(str1, words ):
-#     """Search for a prefix string in the dictionary.
-#     Args:
-#         str:  A string to look for in the dictionary
-#     Returns:
-#         code WORD if str exactly matches a word in the dictionary,
-#             PREFIX if str does not match a word exactly but is a prefix
-#                 of a word in the dictionary, or
-#         NO_MATCH if str is not a prefix of any word in the dictionary
-#     """
+def search_linear(str1, words): 
+    """Search function: Compares a string to a list of words.  Returns either
+    that the string is a word, a prefix of at least 1 word or not in the list.
+   
+    Parameters
+    ---------
+    Input:
+    str1: String
+    Search term to be compared to the dictionary.
+
+    words: List
+    A list of words to be searched.
+
+    Output:
+    WORD: A variable (1) denoting that the string input is a word in the list
+    PREFIX: A variable (2) denoting that the string input is a prefix 
+        of at least 1 word in the list.
+    NO_MATCH: A variable (0) denoting that the string input is a word in the list
+    """
+
 #     if str1 in words:
 #         return WORD
 #     else:
@@ -133,7 +164,7 @@ if __name__ == "__main__":
     word_dict = read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm", word_dict), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead", word_dict), WORD) 
-    #my asserts to test binary search algorithm
+    #Asserts add by Patrick and Dana to test binary search algorithm
     word_dict = read(open("sowpods.txt"), min_length=3)
     testEQ("Searching word/prefix in sowpods.txt (al)", search("al", word_dict), PREFIX)
     testEQ("Searching word/prefix in sowpods.txt (alp)", search("alp", word_dict), WORD) 
