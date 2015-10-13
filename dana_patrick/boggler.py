@@ -1,10 +1,10 @@
 """
 Boggle solver finds words on a boggle board. 
 Authors:  Dana & Patrick 
-Credits: Not sure.  Some guy who wrote most of this code.
+Credits: Michal Young.
 
 Usage:  python3 boggler.py  "board" dict.txt
-    where "board" is 16 characters of board, in left-to-right reading order
+    where "board" is the characters of board, in left-to-right reading order
     and dict.txt can be any file containing a list of words in alphabetical order    
 """
 
@@ -24,7 +24,7 @@ def main():
     Input:
     None
     pulls two arguments from the command line:
-        "board" is 16 characters of board, in left-to-right reading order
+        "board" is the characters of board, in left-to-right reading order
         dict.txt is a file containing a list of words in alphabetical order
     
     Output:
@@ -61,13 +61,13 @@ def getargs():
     Returns:
         pair (dictfile, text)
             dictfile is a file containing dictionary words 
-            text is 16 characters of text that form a board
+            text is the characters of text that form a board
     Effects:
         also prints meaningful error messages when the command line does 
             not have the right arguments
    """
     parser = argparse.ArgumentParser(description="Find boggle words")
-    parser.add_argument('board', type=str, help="A 16 character string\
+    parser.add_argument('board', type=str, help="A string of characters\
         to represent 4 rows of 4 letters. Q represents QU.")
     parser.add_argument('dict', type=argparse.FileType('r'),
         help="A text file containing dictionary words, one word per line.")
