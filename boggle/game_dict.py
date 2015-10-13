@@ -55,10 +55,10 @@ def search( prefix ):
     global words
 
     if [1 for word in words if word == prefix]:
-        return 1
+        return 1   # prefix is a word
 
     if [2 for word in words if word.startswith(prefix)]:
-        return 2
+        return 2  # prefix is a prefix
 
     return 0
 

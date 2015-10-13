@@ -1,3 +1,4 @@
+import time 
 """
 Boggle board
 Author: Michal Young
@@ -123,7 +124,7 @@ class BoggleBoard(object):
        self.in_use[row][col] = True
        grid.fill_cell(row,col,grid.green)
        grid.label_cell(row,col,self.content[row][col])
-
+       #  time.sleep(.25)
    def unmark_taken(self, row, col):
        """
        Marks the tile at row,col as no longer in use. 
