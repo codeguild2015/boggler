@@ -9,6 +9,11 @@ has three possible outcomes:  The string matches a word exactly,
 or it does not match exactly but is a prefix of a word, or there is
 no word starting with that string.
 """
+
+# Codes for result of search
+WORD = 1
+PREFIX = 2
+NO_MATCH = 0
  
 
 def read(file1, min_length=3 ):
@@ -16,7 +21,7 @@ def read(file1, min_length=3 ):
 
     Itterates through a provided list of words.  All words of an appropriate 
         length (default 3 letters or longer) and playable in Boggle are added 
-        to the final result which is returned.
+        to the final list which is returned.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
         min_length: integer, minimum length of words to include in 
@@ -37,6 +42,7 @@ def read(file1, min_length=3 ):
     words = sorted(words)  # Being sorted is essential for binary search
     return words        
 
+
 def search(str1, lst):
     """Search function.
 
@@ -46,7 +52,7 @@ def search(str1, lst):
     Parameters
     ---------
     Args:
-        str1: A string to be compared against a dictionary[list of words].
+        str1: A string to be compared against a game dictionary[list of words].
         words: A list of words to be searched.
 
     Returns:
@@ -55,17 +61,14 @@ def search(str1, lst):
             of at least 1 word in the list.
         NO_MATCH: A variable denoting that the string input is a word in the list
     """
-    # Codes for result of search
-    WORD = 1
-    PREFIX = 2
-    NO_MATCH = 0
 
     max = len(lst)
     min = 0
+    # List of 3 is the base case as a list of 2 causes infinte recursion.
     if lst[max//2] == str1 or max <= 3:
         if str1 == lst[max//2]\
         or str1 == lst[min]\
-        or str1 == lst[max-1]:
+        or str1 == lst[max-1]: # -1 corrects diff between len(list) and last index.
             return WORD
         elif lst[max//2].startswith(str1)\
         or lst[min].startswith(str1)\
@@ -81,38 +84,34 @@ def search(str1, lst):
 
 
 def search_linear(str1, words): 
-    """Search function: Compares a string to a list of words.  Returns either
-    that the string is a word, a prefix of at least 1 word or not in the list.
+    """Search function: Searches dict.txt for prefix of words and returns prefix
+    also searches dict.txt for words that can be used on boggle board.
    
     Parameters
     ---------
     Input:
-    str1: String
-    Search term to be compared to the dictionary.
-
-    words: List
-    A list of words to be searched.
+    str1: Parameter assigned to fing prefix's in the dict.txt
+    words: Parameter assigned to find possible words that can be used on the boggle board.
 
     Output:
-    WORD: A variable (1) denoting that the string input is a word in the list
-    PREFIX: A variable (2) denoting that the string input is a prefix 
-        of at least 1 word in the list.
-    NO_MATCH: A variable (0) denoting that the string input is a word in the list
+    WORD: Words to be used on boggle board based on the dict.txt.
+    PREFIX: Identifies prefix in dict.
+    NO_MATCH: Returns no math.
     """
 
-#     if str1 in words:
-#         return WORD
-#     else:
-#         for word in words:
-#             if word.startswith(str1):
-#                 return PREFIX
-#         return NO_MATCH
+    if str1 in words:
+        return WORD
+    else:
+        for word in words:
+            if word.startswith(str1):
+                return PREFIX
+        return NO_MATCH
 
-#     # FIXME: I suggest using a linear search first, checking for exact matches
-#     # with == and then for partial matches with the "startswith" function, e.g.,
-#     # words[i].startswith(prefix). 
-#     # Once you get the whole program working, you can make it much, much faster
-#     # using a binary search (which we will discuss in class). 
+    # FIXME: I suggest using a linear search first, checking for exact matches
+    # with == and then for partial matches with the "startswith" function, e.g.,
+    # words[i].startswith(prefix). 
+    # Once you get the whole program working, you can make it much, much faster
+    # using a binary search (which we will discuss in class). 
     
     
 ######################################################
