@@ -2,7 +2,7 @@
 game_dict: Game dictionary.
 
 Authors:  Patrick and Dana
-Consulted in design: Cole, Thunder and the internet
+Consulted in design: Cole, Connor, Thunder, Andrew McNally and the internet
 
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
@@ -54,46 +54,9 @@ def search(str1, lst):
             return NO_MATCH
     else:
         if str1 < lst[max//2]:
-            return search(str1, lst[:max//2 + 1]) # +1 to be inclusive
+            return search(str1, lst[:max//2 + 1]) # +1 to inc. middle item of odd list
         else:
             return search(str1, lst[max//2:])
-       
-# def search_double_loop(str1, lst):      
-#     def is_word(str1, lst):
-#         max = len(lst)
-#         min = 0
-#         if str1 == lst[max//2]:
-#             return WORD
-#         if max//2 == 0:
-#             return NO_MATCH
-#         else:
-#             if str1 > lst[max//2]:
-#                 return is_word(str1, lst[max//2:])
-#             else:
-#                 return is_word(str1, lst[:max//2])
-
-
-#     def is_prefix(str1, lst):
-#         max = len(lst)
-#         min = 0
-#         if lst[max//2].startswith(str1):
-#             return PREFIX
-#         if max//2 == 0:
-#             return NO_MATCH
-#         else:
-#             if str1 > lst[max//2]:
-#                 return is_prefix(str1, lst[max//2:])
-#             else:
-#                 return is_prefix(str1, lst[:max//2])
-    
-#     val = is_word(str1, lst)
-#     if val == WORD:
-#         return WORD
-#     if val == NO_MATCH:
-#         if is_prefix(str1, lst) == PREFIX:
-#             return PREFIX
-#         else: 
-#             return NO_MATCH
 
 
 # def search_linear(str1, words ):
@@ -172,11 +135,11 @@ if __name__ == "__main__":
     testEQ("Can I find bead in long dictionary?", search("bead", word_dict), WORD) 
     #my asserts to test binary search algorithm
     word_dict = read(open("sowpods.txt"), min_length=3)
-    testEQ("Words in sowpods.txt (al)", search("al", word_dict), PREFIX)
-    testEQ("Words in sowpods.txt (alp)", search("alp", word_dict), WORD) 
-    testEQ("Words in sowpods.txt (alph)", search("alph", word_dict), PREFIX) 
-    testEQ("Words in sowpods.txt (alpha)", search("alpha", word_dict), WORD)
-    testEQ("Words in sowpods.txt (alphb)", search("alphb", word_dict), NO_MATCH)
+    testEQ("Searching word/prefix in sowpods.txt (al)", search("al", word_dict), PREFIX)
+    testEQ("Searching word/prefix in sowpods.txt (alp)", search("alp", word_dict), WORD) 
+    testEQ("Searching word/prefix in sowpods.txt (alph)", search("alph", word_dict), PREFIX) 
+    testEQ("Searching word/prefix in sowpods.txt (alpha)", search("alpha", word_dict), WORD)
+    testEQ("Searching word/prefix in sowpods.txt (alphb)", search("alphb", word_dict), NO_MATCH)
 
     
     
