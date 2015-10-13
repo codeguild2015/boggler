@@ -44,10 +44,21 @@ def read(file1, min_length=3 ):
 
 
 def search(str1, lst):
-    """Search function.
+    """Recursive binary search function.
 
     Compares a string to a list of words.  Returns either
     that the string is a word, a prefix of at least 1 word or not in the list.
+
+    Search is done by divinding the list in half and checking the search string 
+    against the middle point of the split.  If the string is equal to the mid point
+    then it stops and returns WORD.
+
+    If the search string is not equal to the mid point then search will continue
+    by persuing the half in which the string could be.  That half will be split 
+    in half and so on.  
+
+    When the list is 3 items or less the binary search stops and a linear approach
+    is adopted.  This is to prevent infinite recursion on a list of 2 items.
    
     Parameters
     ---------
@@ -84,7 +95,10 @@ def search(str1, lst):
 
 
 def search_linear(str1, words): 
-    """Search function: Searches dict.txt for prefix of words and returns prefix
+    """This function is redundant and not called.  It is left in for 
+    historical reasons.
+
+    Search function.  Searches dict.txt for prefix of words and returns prefix
     also searches dict.txt for words that can be used on boggle board.
    
     Parameters
