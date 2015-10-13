@@ -96,23 +96,30 @@ def search(str1, lst):
 #             return NO_MATCH
 
 
-# def search_linear(str1, words ):
-#     """Search for a prefix string in the dictionary.
-#     Args:
-#         str:  A string to look for in the dictionary
-#     Returns:
-#         code WORD if str exactly matches a word in the dictionary,
-#             PREFIX if str does not match a word exactly but is a prefix
-#                 of a word in the dictionary, or
-#         NO_MATCH if str is not a prefix of any word in the dictionary
-#     """
-#     if str1 in words:
-#         return WORD
-#     else:
-#         for word in words:
-#             if word.startswith(str1):
-#                 return PREFIX
-#         return NO_MATCH
+ # def search_linear(str1, words ):
+    
+ #    """Search function: Searches dict.txt for prefix of words and returns prefix
+ #     also searches dict.txt for words that can be used on boggle board.
+    
+ #    Parameters
+ #    ---------
+ #    Input:
+ #    str1: Parameter assigned to fing prefix's in the dict.txt
+ #    words: Parameter assigned to find possible words that can be used on the boggle board.
+
+ #    Output:
+ #    WORD: Words to be used on boggle board based on the dict.txt.
+ #    PREFIX: Identifies prefix in dict.
+ #    NO_MATCH: Returns no math.
+ #    """
+ #     if str1 in words:
+ #         return WORD
+ #     else:
+ #         for word in words:
+ #             if word.startswith(str1):
+ #                 return PREFIX
+ #         return NO_MATCH
+
 
 #     # FIXME: I suggest using a linear search first, checking for exact matches
 #     # with == and then for partial matches with the "startswith" function, e.g.,
