@@ -48,14 +48,17 @@ class BoggleBoard(object):
         Returns:  Nothing.  The board is encapsulated in this module.
         """
        assert(len(tiles) == 16)
+       assert(len(tiles)**.5 == int(len(tiles)**.5)) # To make sure board is square.
        self.content = [ ]
        self.in_use = [ ]
-       grid.make(4,4,500,500)     # Hack alert! 
-       for row in range(4):
+       self.board_height = int(len(tiles)**.5)
+       self.board_width = int(len(tiles)**.5)
+       grid.make(self.board_height,self.board_width,500,500)     # Hack alert! 
+       for row in range(self.board_height):
            self.content.append([ ])
            self.in_use.append([ ])
-           for col in range(4):
-               char = tiles[4*row + col]
+           for col in range(self.board_width):
+               char = tiles[int(len(tiles)**.5)*row + col]
                if char == "q" :
                    char = "qu"
                self.content[row].append(char)
