@@ -169,9 +169,9 @@ assert score("car") == 1
 assert score("this") == 1
 assert score("brady") == 2
 assert score("dragon") == 3
-assert score("fjibhrd") == 5
-assert score("hjsihfyd") == 11
-assert score("wfiwfjiwjsfjkejfiwjijefijie") == 11
+assert score("puzzled") == 5
+assert score("maximize") == 11
+assert score("charismatically") == 11
 
 def score_list(lst):
    """
