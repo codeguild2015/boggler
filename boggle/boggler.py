@@ -8,7 +8,6 @@ Usage:  python3 boggler.py  "board" dict.txt
     and dict.txt can be any file containing a list of words in alphabetical order    
 """
 
-import datetime
 from boggle_board import BoggleBoard   
 import argparse   # Command line processing
 import game_dict  # Dictionary of legal game words
