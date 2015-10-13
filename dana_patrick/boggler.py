@@ -5,7 +5,13 @@ Credits: Michal Young.
 
 Usage:  python3 boggler.py  "board" dict.txt
     where "board" is the characters of board, in left-to-right reading order
-    and dict.txt can be any file containing a list of words in alphabetical order    
+    and dict.txt can be any file containing a list of words in alphabetical order.
+
+    For example:
+    python3 boggler.py "ammaglxxxxpaxxxh" shortdict.txt  
+    python3 boggler.py "ammaglxxxxpaxxxh" dict.txt
+    python3 boggler.py "pesuhtelreiitiia" sowpods.txt
+    python3 boggler.py "mnbvcxzlkjhgfdsapoiuytrew" sowpods.txt
 """
 
 from boggle_board import BoggleBoard   
