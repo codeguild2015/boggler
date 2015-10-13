@@ -100,9 +100,8 @@ def find_words(board, row, col, str1):
     
     # A list of relative positions of any cell in a square grid.
     neighbors = [
-        (-1, -1), (-1,  0), (-1,  1), 
-        ( 0,  1),           ( 1,  1), 
-        ( 1,  0), ( 1, -1), ( 0, -1)
+        (-1, -1), (-1,  0), (-1,  1), (0,  1), (1,  1), 
+        (1,  0), (1, -1), ( 0, -1)
     ]
 
     board.mark_taken(row, col) # marks the currently occupied square as taken.
