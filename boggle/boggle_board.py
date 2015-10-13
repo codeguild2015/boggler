@@ -47,7 +47,7 @@ class BoggleBoard(object):
                but 'q' represents the pair 'qu' on a tile.
         Returns:  Nothing.  The board is encapsulated in this module.
         """
-       assert(len(tiles) == 16)
+       #assert(len(tiles) == 16)
        assert(len(tiles)**.5 == int(len(tiles)**.5)) # To make sure board is square.
        self.content = [ ]
        self.in_use = [ ]
