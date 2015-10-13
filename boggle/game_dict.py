@@ -104,7 +104,7 @@ def search(str1, lst):
  #    Parameters
  #    ---------
  #    Input:
- #    str1: Parameter assigned to fing prefix's in the dict.txt
+ #    str1: Parameter assigned to find prefix's in the dict.txt
  #    words: Parameter assigned to find possible words that can be used on the boggle board.
 
  #    Output:
