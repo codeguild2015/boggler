@@ -30,9 +30,7 @@ def read( file, min_length = 3 ):
     Returns:  nothing   
     """
     global words 
-    words = [ ] 
-    #FIXME: read the dictionary file into words.  Skip words that
-    #   are too short or contain non-alphabetic characters
+    words = [ ]
     for line in file:
         if "-" not in line and "\'" not in line:
             word_ = line.split()
@@ -43,7 +41,8 @@ def read( file, min_length = 3 ):
 
 
 def search( prefix ):
-    """Search for a prefix string in the dictionary.
+    """Search for a prefix string in the dictionary using binary search method.
+    Code adapted from Allen Downey's 'How to Think Like a Computer Scientist'
     Args:
         str:  A string to look for in the dictionary
     Returns:
@@ -53,27 +52,28 @@ def search( prefix ):
         NO_MATCH if str is not a prefix of any word in the dictionary
     """
     global words
-    matches = []
-    for item in words:
-        if item.startswith(prefix) == True: 
-            matches.append(item)
-    if len(matches) == 0:
-        return NO_MATCH
-    if prefix in matches:
-        return WORD
-    if len(matches) >= 1:
+    lower_bound = 0
+    upper_bound = len(words)
+    matches = []  # collecting prefixes in a separate list in order for binary search
+                  # to find complete words.
+    while True: 
+        if lower_bound == upper_bound:
+            break
+        half_index = (lower_bound + upper_bound) // 2
+        mid_item = words[half_index]               
+        if mid_item == prefix:
+            return WORD
+        if mid_item.startswith(prefix):             
+            matches.append(prefix)
+        if mid_item < prefix:
+            lower_bound = half_index + 1
+        else:
+            upper_bound = half_index  
+    if len(matches) > 0:
         return PREFIX
-    
-    """
-    if [1 for word in words if word == prefix]:
-        return 1
+    else: 
+        return NO_MATCH
 
-    if [2 for word in words if word.startswith(prefix)]:
-        return 2
-
-    return 0
-    """
-   
     
 ######################################################
 #  Test driver
@@ -125,5 +125,7 @@ if __name__ == "__main__":
     read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
+    
+
     
     
