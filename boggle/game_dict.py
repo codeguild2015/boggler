@@ -16,7 +16,7 @@ WORD = 1
 PREFIX = 2
 NO_MATCH = 0
 
-def read(file1, min_length=3 ):
+def read(file1, min_length = 3 ):
     """Read the dictionary from a sorted list of words.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
