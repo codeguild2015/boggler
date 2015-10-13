@@ -74,8 +74,9 @@ def getargs():
     args = parser.parse_args()  # Gets args from command line and validates them.
     text = args.board
     dictfile = args.dict
-    if len(text) != 16 :
-        print("Board text must be exactly 16 alphabetic characters")
+    if int(len(text)**.5) != (len(text)**.5): # Tests if board is square.
+        print("Board text must result in a square board.  Please enter 4, 9, 16",
+        "25, 36, etc. alphabetic characters,")
         exit(1)
     return dictfile, text
 
