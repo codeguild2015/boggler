@@ -41,7 +41,7 @@ def main():
 
     for x in range(4): # Creates range to hit all possible x values on board.
         for y in range(4): # Creates range to hit all possible y values on board.
-            results = find_words(board, x, y, board.get_char(x,y))
+            results.update(find_words(board, x, y, board.get_char(x,y)))
     final_list = score_list(results)
     total_score = 0
     for x, y in sorted(final_list): # Prints each word with associated score.
@@ -94,8 +94,11 @@ def find_words(board, row, col, str1):
     A set of all unique words found on the boggle board  
     """
     
-    global results
-    neighbors = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]
+    neighbors = [
+        (-1, -1), (-1,  0), (-1,  1), 
+        ( 0,  1),           ( 1,  1), 
+        ( 1,  0), ( 1, -1), ( 0, -1)
+    ]
 
     board.mark_taken(row, col)
     for x, y, in neighbors:
