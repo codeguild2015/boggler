@@ -212,4 +212,4 @@ def score_list(lst):
 
 if __name__ == "__main__":
     main()
-    # input("Press enter to end")
+    input("Press enter to end")
