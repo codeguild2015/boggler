@@ -35,8 +35,8 @@ def main():
 
     
     global word_dict
-    dict_file, board_text = getargs()
-    word_dict = game_dict.read( dict_file )
+    dict_file, board_text = getargs() # pulls args from command line
+    word_dict = game_dict.read(dict_file)
     board = BoggleBoard(board_text)
 
     for x in range(4): # Creates range to hit all possible x values on board.
@@ -94,28 +94,32 @@ def find_words(board, row, col, str1):
     A set of all unique words found on the boggle board  
     """
     
+    # A list of relative positions of any cell in a square grid.
     neighbors = [
         (-1, -1), (-1,  0), (-1,  1), 
         ( 0,  1),           ( 1,  1), 
         ( 1,  0), ( 1, -1), ( 0, -1)
     ]
 
-    board.mark_taken(row, col)
+    board.mark_taken(row, col) # marks the currently occupied square as taken.
     for x, y, in neighbors:
         x += row
         y += col
-        if board.available(x, y):
-            str1 += board.get_char(x, y)
+        if board.available(x, y): 
+            str1 += board.get_char(x, y) # builds the string to be searched.
             if game_dict.search(str1, word_dict) == 1:
-                results.add(str1)
-                find_words(board, x, y, str1)
+                results.add(str1) 
+                find_words(board, x, y, str1) # a word can also be a prefix.
             elif game_dict.search(str1, word_dict) == 2:
                 find_words(board, x, y, str1)
-            if board.get_char(x, y) == 'qu':
+            # subtracting from the string when moving away from a tile.
+            # "q" char in boggle is always represented as "qu"
+            if board.get_char(x, y) == 'qu': 
                 str1 = str1[:-2]
             else:
                 str1 = str1[:-1]
-    board.unmark_taken(row, col)
+
+    board.unmark_taken(row, col) # unmarks a square before leaving the square.
     return results
             
 
@@ -137,23 +141,21 @@ def find_words(board, row, col, str1):
 	#    around it, and finally mark it as no longer in use. See board.py
 	#    for how to mark and unmark tiles, and how to get the text
 	#    on the current tile.     
-    return
-    
     
     
 def score(word):
    """
-   Takes a string of words produced by running res_set.
+   Calculates the score of a word using the rules for Boggle.
 
    Parameters
    ---------
    Input:
    word: String
-   Word
+   A word to be scored.
 
    Output:
    int:
-   The score value of a word.
+   The score value of the word.
    """
 
    line_word = len(word)
@@ -176,15 +178,21 @@ assert score("fjibhrd") == 5
 assert score("hjsihfyd") == 11
 assert score("wfiwfjiwjsfjkejfiwjijefijie") == 11
 
+
 def score_list(lst):
    """
-   Takes a list of words produced by running res_set.
+   Scores a list of words according the rules of Boggle.
+
+   This function takes a list of words and caclulates the score for each word.  
+   Each word and score combination is stored as a tuple in a new list which is
+   returned.
 
    Parameters
    ---------
    Input:
-   list: String
-   Word
+   score_lst: List
+   A list of words and scores stored as tuples.
+   
 
    Output:
    int:
@@ -195,18 +203,11 @@ def score_list(lst):
        score_lst.append((elem, score(elem)))
    return score_lst
 
+
 ####
 # Run if invoked from command line
 ####
 
 if __name__ == "__main__":
-    start = datetime.datetime.now()
     main()
-    end = datetime.datetime.now()
-    delta = end - start
-    # input("Press enter to end")
-    print("\nTotal process took ", datetime.timedelta.total_seconds(delta), "seconds.")
-
-
-   
-
+    input("Press enter to end")
