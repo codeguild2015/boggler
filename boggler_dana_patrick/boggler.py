@@ -128,27 +128,7 @@ def find_words(board, row, col, str1):
             else:
                 str1 = str1[:-1]
     board.unmark_taken(row, col) # unmarks a square before leaving the square.
-    return results
-            
-
-	# FIXME: one base case is that position row,col is not
-	#    available (could be off the board, could be currently
-	#    in use).  board.py can check that
-	# FIXME:  For the remaining cases, where the tile at row,col 
-	#    is available, we need to consider the new prefix that 
-	#    includes the letter on this tile
-	# FIXME:  Another base case is that no word can start with 
-	#    the current prefix.  No use searching further on that path.
-	# FIXME:  If the current position is a complete word, it is NOT 
-	#    a base case, because it might also be part of a longer word. 
-	#    We save the word we found into the global results list, and
-	#    continue with the recursive case. 
-	# FIXME: The recursive case is when the current prefix (including
-	#    the tile at row,col) is a possible prefix of a word.  We 
-	#    must mark it as currently in use, then search in all 8 directions
-	#    around it, and finally mark it as no longer in use. See board.py
-	#    for how to mark and unmark tiles, and how to get the text
-	#    on the current tile.     
+    return results  
     
     
 def score(word):

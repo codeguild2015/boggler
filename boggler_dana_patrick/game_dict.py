@@ -120,13 +120,7 @@ def search_linear(str1, words):
             if word.startswith(str1):
                 return PREFIX
         return NO_MATCH
-
-    # FIXME: I suggest using a linear search first, checking for exact matches
-    # with == and then for partial matches with the "startswith" function, e.g.,
-    # words[i].startswith(prefix). 
-    # Once you get the whole program working, you can make it much, much faster
-    # using a binary search (which we will discuss in class). 
-    
+        
     
 ######################################################
 #  Test driver
