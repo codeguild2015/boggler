@@ -54,8 +54,8 @@ def search( prefix ):
     global words
     lower_bound = 0
     upper_bound = len(words)
-    matches = []  # collecting prefixes in a separate list in order for binary search
-                  # to find complete words.
+    matches = []  # collects prefixes in order for binary search to finish its search 
+                  # of complete words.
     while True: 
         if lower_bound == upper_bound:
             break
