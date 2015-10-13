@@ -34,11 +34,11 @@ def read(file1, min_length=3 ):
 
     words = [ ]
     for line in file1:
-        # words need to be pre-stripped to eliminate whitepace issues counting len
-        if len(line.strip()) >= min_length\
-        and "-" not in line\
-        and "'" not in line:
-            words.append(line.strip().lower())
+        # words need to be pre-stripped to eliminate whitepace issues 
+        # counting len and lower case to compare to our dictionary.
+        word = line.strip().lower()
+        if len(word) >= min_length and word.isalpha():
+            words.append(word)
     words = sorted(words)  # Being sorted is essential for binary search
     return words        
 
