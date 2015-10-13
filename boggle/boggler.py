@@ -1,11 +1,11 @@
 # A script to solve a Boggle board. 
 
-__author__ = "Kevin and Ransom, Michael Young, PDX Code Guild 2015 Class"
+__author__ = "Kevin and Ransom, Michal Young, PDX Code Guild 2015 Class"
 
 """
 Boggle solver finds words on a boggle board. 
-Authors:  #FIXME
-Credits: #FIXME 
+Authors:  Kevin and Ransom
+Credits: Michal Young, Thunder Shiviah, Cole and Patrick
 
 Usage:  python3 boggler.py  "board" dict.txt
     where "board" is 16 characters of board, in left-to-right reading order
@@ -89,25 +89,27 @@ def find_words(board, row, col, prefix, results):
     if board.available(row, col) is False:
         return "Tile not available!"
     
-    board.mark_taken(row, col) 
-    offset = [-1, 0, 1]
-    for i in offset:
-        for j in offset:
-            if board.available(row + i, col + j) is True:
-                prefix += board.get_char(row + i, col + j)  
-                #print("Current search!", row, col, prefix)
-                if game_dict.search(prefix) == 1: # These are words in the dictionary.
-                    results.append(prefix)
-                    #print("I found a word!", row, col, prefix)
-                    find_words(board, row + i, col + j, prefix, results)
-                elif game_dict.search(prefix) == 2: # These are prefixes in the dictionary.
-                    find_words(board, row + i, col + j, prefix, results)
-                    #print("I found a prefix!", row, col, prefix)
+    else:
+        board.mark_taken(row, col)
 
-                else: # game_dict.search(prefix) == 0:
-                    prefix = prefix[:-1] # If prefix is not a word or known prefix,
-                                         # start again from the last letter.
-    board.unmark_taken(row, col) 
+        for i in range(row - 1, row + 2):
+            for j in range(col - 1, col + 2):
+                if board.available(i, j) is True:
+                    print('get_char looking for location: ', row + i, col + j)
+                    prefix += board.get_char(i, j)
+                    is_word = game_dict.search(prefix)
+                    if is_word == 1:  # prefix is a word
+                        results.append(prefix)
+                        find_words(board, i, j, prefix, results)
+                    elif is_word == 2:  # prefix is a prefix but not also a word
+                        find_words(board, i, j, prefix, results)  # need to fix args
+                    if board.get_char(i, j) == 'qu':
+                        prefix = prefix[:-2]
+                    else:
+                        prefix = prefix[:-1]
+        board.unmark_taken(row, col)
+        print("Reults at end of nested for: ", results)
+        return results
 
       
 def score(word):
