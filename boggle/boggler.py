@@ -39,13 +39,11 @@ def main():
     word_dict = game_dict.read(dict_file)
     board = BoggleBoard(board_text)
 
-    board_height = 4
-    row_height = 4 
 
     # Creates range to hit all possible x values on board.
-    for x in range(board_height): 
+    for x in range(board.board_height): 
         # Creates range to hit all possible y values on board.
-        for y in range(row_height): 
+        for y in range(board.board_width): 
             # runs recursive search beginning from each tile on the board.
             results.update(find_words(board, x, y, board.get_char(x,y)))
     final_list = score_list(results)
