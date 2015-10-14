@@ -49,6 +49,7 @@ class BoggleBoard(object):
         """
        assert(len(tiles) == 16)
        self.content = [ ]
+       self.results = []
        self.in_use = [ ]
        grid.make(4,4,500,500)     # Hack alert! 
        for row in range(4):
