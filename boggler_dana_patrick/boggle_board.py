@@ -5,7 +5,7 @@ Revisions:    Initial version  26 Oct 2012 for CIS 210 at U. Oregon
               Feb 2013, reorganized as a class BoggleBoard
               October 2014, minor clean up of documentation
 
-The BoggleBoard is a 4x4 matrix of tiles
+The BoggleBoard is a square matrix of tiles
 where each tile represents a character
 (except "qu" is a single tile).  In addition
 to the character(s), each tile can be in
@@ -16,9 +16,9 @@ including color to show which tiles are currently
 in use. 
 
 Limitations:
-    Standard 4x4 board assumed throughout; 4 and 16 are
-    used as 'magic numbers', making this difficult to
-    adapt to non-standard boards.
+    Board must be square.  Any num of chars can be passed into the function
+    but the resulting board must be square or an error will be presented to 
+    the user.  
 
     The graphics code is tangled into maintenance of the
     board ("model" mixed with "view"); we will learn how
@@ -28,7 +28,7 @@ import grid
 
 class BoggleBoard(object):
    """
-   The BoggleBoard is a 4x4 matrix of tiles
+   The BoggleBoard is a square matrix of tiles
    where each tile represents a character
    (except "qu" is a single tile).  In addition
    to the character(s), each tile can be in
@@ -38,24 +38,29 @@ class BoggleBoard(object):
    def __init__(self,  tiles):
        """
        Create a boggle board and its graphical depiction
-       from a string of 16 characters.
+       from a string of characters.
        Args:
         self:  the board (to be initialized)
-        tiles: A string of exactly 16 characters, each
+        tiles: A string of characters, each
                representing one tile.  Most characters
                represent a tile containing that character,
                but 'q' represents the pair 'qu' on a tile.
         Returns:  Nothing.  The board is encapsulated in this module.
         """
-       assert(len(tiles) == 16)
+       # To maintain desired functionality from the command line the board must 
+       # square.  To ensure this and do math on the board square root is used
+       # frequently.  
+       assert(len(tiles)**.5 == int(len(tiles)**.5)) # To ensure board is quare.  
        self.content = [ ]
        self.in_use = [ ]
-       grid.make(4,4,500,500)     # Hack alert! 
-       for row in range(4):
+       self.board_height = int(len(tiles)**.5) 
+       self.board_width = int(len(tiles)**.5)
+       grid.make(self.board_height,self.board_width,500,500)     # Hack alert! 
+       for row in range(self.board_height):
            self.content.append([ ])
            self.in_use.append([ ])
-           for col in range(4):
-               char = tiles[4*row + col]
+           for col in range(self.board_width):
+               char = tiles[int(len(tiles)**.5)*row + col]
                if char == "q" :
                    char = "qu"
                self.content[row].append(char)
@@ -68,8 +73,8 @@ class BoggleBoard(object):
        Returns the character at (row,col)
        Args:
            self: this board
-           row: row of board, 0..3
-           col: col of board, 0..3
+           row: row of board, 0..n
+           col: col of board, 0..n
        Returns:
            the string labeling the tile at board[row,col]
        Requires:
@@ -104,8 +109,8 @@ class BoggleBoard(object):
        Marks the tile at row,col as currently in use
        Args:
           self: this board
-          row: row of board, 0..3
-          col: col of board, 0..3
+          row: row of board, 0..n
+          col: col of board, 0..n
        Returns:
           nothing
        Requires:
@@ -130,8 +135,8 @@ class BoggleBoard(object):
        Tile at row,col must be in use when this function is called.
        Args:
           self: this board
-          row: row of board, 0..3
-          col: col of board, 0..3
+          row: row of board, 0..n
+          col: col of board, 0..n
        Returns:
           nothing
        Requires:
