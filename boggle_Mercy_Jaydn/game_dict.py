@@ -1,23 +1,23 @@
 """
 game_dict: Game dictionary.
-
-Authors:  #FIXME
-Consulted in design: #FIXME
-
+​
+Authors: Jaydn & Mercy
+Consulted in design: Thunder, Cole, Connor, Patrick, Stackoverflow
+​
 Differs from a spelling dictionary in that looking up a string
 has three possible outcomes:  The string matches a word exactly,
 or it does not match exactly but is a prefix of a word, or there is
 no word starting with that string.
 """
-
-words = [ ]  
-
+​
+words = []
+​
 # Codes for result of search
 WORD = 1
 PREFIX = 2
 NO_MATCH = 0
-
-def read( file, min_length=3 ):
+​
+def read( f, min_length=3 ):
     """Read the dictionary from a sorted list of words.
     Args:
         file: dictionary file (list of words, in alphabetical order), already open
@@ -31,10 +31,12 @@ def read( file, min_length=3 ):
     """
     global words
     words = [ ]
-    #FIXME: read the dictionary file into words.  Skip words that
-    #   are too short or contain non-alphabetic characters
-    words = sorted(words)  # Being sorted is most important for binary search
-            
+    for word in f:
+        word = word.strip() # For min_length to work this strips out empty spaces in words.
+        if len(word) >= min_length and word.isalpha(): # Skip words that are too short or non-alphabetic.
+            words.append(word) # Appends the new cleaned version to words.
+    words = sorted(words)  # Being sorted is most important for binary search.
+​
 def search( prefix ):
     """Search for a prefix string in the dictionary.
     Args:
@@ -43,14 +45,15 @@ def search( prefix ):
         code WORD if str exactly matches a word in the dictionary,
             PREFIX if str does not match a word exactly but is a prefix
                 of a word in the dictionary, or
-        NO_MATCH if str is not a prefix of any word in the dictionary
-    """
-    return NO_MATCH
-    # FIXME: I suggest using a linear search first, checking for exact matches
-    # with == and then for partial matches with the "startswith" function, e.g.,
-    # words[i].startswith(prefix). 
-    # Once you get the whole program working, you can make it much, much faster
-    # using a binary search (which we will discuss in class). 
+        NO_MATCH if str is not a prefix of any word in the dictionary """
+​
+    for word in words:
+        if any(prefix == word for word in words): # Searches through our cleaned up words to find prefixes
+            return WORD                           # that match words and outputs WORD
+        elif any(word.startswith(prefix) for word in words): # .startswith will search through
+            return PREFIX                          # words and outputs PREFIX
+        else:
+            return NO_MATCH
     
     
 ######################################################
@@ -69,8 +72,8 @@ def search( prefix ):
 #      python  game_dict.py     (in Windows)
 #
 #######################################################
-
-
+​
+​
 if __name__ == "__main__":
     # This code executes only if we execute game_dict.py by itself,
     # not if we import it into boggler.py
@@ -103,5 +106,3 @@ if __name__ == "__main__":
     read(open("dict.txt"))  # Long dictioanry
     testEQ("Can I find farm in long dictonary?", search("farm"), WORD)
     testEQ("Can I find bead in long dictionary?", search("bead"), WORD)
-    
-    
