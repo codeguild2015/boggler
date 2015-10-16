@@ -31,6 +31,7 @@ def read( file, min_length=3 ):
     """
     global words
     words = [ ]
+	
     #FIXME: read the dictionary file into words.  Skip words that
     #   are too short or contain non-alphabetic characters
     words = sorted(words)  # Being sorted is most important for binary search
